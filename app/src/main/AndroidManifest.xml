@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.myfirebasejavaproject">
+
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Common.uploadRetrieveImages">
+
+        </activity>
+        <activity android:name=".Common.practiceDetailActivity" />
+        <activity android:name=".Common.retrieveDataPractice">
+
+        </activity>
+        <activity android:name=".User.UserDashboard" >
+
+        </activity>
+        <activity android:name=".Common.OnBoarding" />
+        <activity android:name=".app.SignInWithGoogle" />
+        <activity android:name=".app.Verify_phone_page" />
+        <activity android:name=".app.Userprofile" />
+        <activity android:name=".app.LoginActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".app.DashboardActivity" />
+        <activity android:name=".Common.SplashActivity" />
+        <activity android:name=".Tabs.SignUpTabs" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+    </application>
+
+</manifest>

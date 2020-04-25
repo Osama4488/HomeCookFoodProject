@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "915880005122",
+    "firebase_url": "https://homecookfoodproject.firebaseio.com",
+    "project_id": "homecookfoodproject",
+    "storage_bucket": "homecookfoodproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915880005122:android:b090956a7768856d35611b",
+        "android_client_info": {
+          "package_name": "com.example.myfirebasejavaproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915880005122-n61rp00ka0s8sl2mceup3l2icgu02vni.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myfirebasejavaproject",
+            "certificate_hash": "445e610428c28a0537342823f98f142dd2083587"
+          }
+        },
+        {
+          "client_id": "915880005122-7e70p8h4tmn4m4vp58tgce9kg33f6ajm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzrmxOwseaErkTs-yEh37DrnS84K4VH9U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915880005122-7e70p8h4tmn4m4vp58tgce9kg33f6ajm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
