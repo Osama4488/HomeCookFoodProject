@@ -9,14 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myfirebasejavaproject.Common.retrieveDataPractice;
-import com.example.myfirebasejavaproject.Models.UserHelperClass;
-import com.example.myfirebasejavaproject.Models.practiceModel;
+import com.example.myfirebasejavaproject.models.UserHelperClass;
 import com.example.myfirebasejavaproject.R;
 import com.squareup.picasso.Picasso;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FeaturedAdapter  extends RecyclerView.Adapter<FeaturedAdapter.FeaturedViewHolder> {

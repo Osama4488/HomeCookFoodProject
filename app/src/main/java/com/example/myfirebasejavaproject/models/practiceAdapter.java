@@ -1,4 +1,4 @@
-package com.example.myfirebasejavaproject.Models;
+package com.example.myfirebasejavaproject.models;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myfirebasejavaproject.Common.practiceDetailActivity;
+import com.example.myfirebasejavaproject.common.practiceDetailActivity;
 import com.example.myfirebasejavaproject.Networks.Utils;
 import com.example.myfirebasejavaproject.R;
 import com.google.android.gms.tasks.OnSuccessListener;

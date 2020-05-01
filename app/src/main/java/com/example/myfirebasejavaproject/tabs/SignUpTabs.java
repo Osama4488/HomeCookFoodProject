@@ -1,12 +1,7 @@
-package com.example.myfirebasejavaproject.Tabs;
+package com.example.myfirebasejavaproject.tabs;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.Toast;
-import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,11 +9,10 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.myfirebasejavaproject.R;
-import com.example.myfirebasejavaproject.SignupFragments.AsHomeCooker;
-import com.example.myfirebasejavaproject.SignupFragments.AsUser;
+import com.example.myfirebasejavaproject.signupFragments.AsHomeCooker;
+import com.example.myfirebasejavaproject.signupFragments.AsUser;
 import com.example.myfirebasejavaproject.adapters.SignUpTabsAdapter;
 import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,16 +2,11 @@ package com.example.myfirebasejavaproject.app;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.util.Pair;
 
 import android.app.ActivityOptions;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -19,10 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myfirebasejavaproject.Models.UserHelperClass;
+import com.example.myfirebasejavaproject.HomeCooker.Home_cooker_DashBoard;
+import com.example.myfirebasejavaproject.models.UserHelperClass;
 import com.example.myfirebasejavaproject.R;
-import com.example.myfirebasejavaproject.Tabs.SignUpTabs;
-import com.example.myfirebasejavaproject.User.UserDashboard;
+import com.example.myfirebasejavaproject.tabs.SignUpTabs;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -30,7 +25,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -41,32 +35,29 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 
 
+    String passwordFromDB;
+    String homeCookerId;
     ImageView image;
-    TextView logoText,sloganText;
-    TextInputLayout username,password;
-    private Button signup_btn,loginbtn,googleSignIn;
+    TextView logoText, sloganText;
+    TextInputLayout username, password;
+    private Button signup_btn, loginbtn, googleSignIn;
     private GoogleSignInClient mGoogleSignInClient;
     private final static int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
     SharedPreferences onBoardgingScreen;
-
-
+boolean check = false;
 
     @Override
     protected void onStart() {
         super.onStart();
         FirebaseUser user = mAuth.getCurrentUser();
-        if(user != null){
-            Intent intent = new Intent(getApplicationContext(),DashboardActivity.class);
+        if (user != null) {
+            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
             startActivity(intent);
         }
     }
@@ -74,11 +65,8 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
-
-
-
 
 
         googleSignIn = findViewById(R.id.googleIsgnIn);
@@ -103,8 +91,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-
-                loginUser();
+                isUser();
+               // loginUser();
 
             }
         });
@@ -116,21 +104,21 @@ public class LoginActivity extends AppCompatActivity {
 
                 android.util.Pair[] pairs = new android.util.Pair[7];
 
-                pairs[0] = new android.util.Pair<View,String>(image,"logo_image");
+                pairs[0] = new android.util.Pair<View, String>(image, "logo_image");
 
 
-                pairs[1] = new android.util.Pair<View,String>(logoText,"logo_text");
-                pairs[2] = new android.util.Pair<View,String>(sloganText,"sub_heading");
-                pairs[3] = new android.util.Pair<View,String>(username,"username_tran");
-                pairs[4] = new android.util.Pair<View,String>(password,"pass_tran");
-                pairs[5] = new android.util.Pair<View,String>(loginbtn,"go_tran");
-                pairs[6] = new android.util.Pair<View,String>(signup_btn,"signup_tran");
+                pairs[1] = new android.util.Pair<View, String>(logoText, "logo_text");
+                pairs[2] = new android.util.Pair<View, String>(sloganText, "sub_heading");
+                pairs[3] = new android.util.Pair<View, String>(username, "username_tran");
+                pairs[4] = new android.util.Pair<View, String>(password, "pass_tran");
+                pairs[5] = new android.util.Pair<View, String>(loginbtn, "go_tran");
+                pairs[6] = new android.util.Pair<View, String>(signup_btn, "signup_tran");
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                     //ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this,pairs);
                     ActivityOptions options;
-                    options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this,pairs);
-                    startActivity(intent,options.toBundle());
+                    options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
+                    startActivity(intent, options.toBundle());
                 }
 
 
@@ -149,6 +137,7 @@ public class LoginActivity extends AppCompatActivity {
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
+
     private void signIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -187,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                             //Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                            Intent intent = new Intent(getApplicationContext(),DashboardActivity.class);
+                            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
                             startActivity(intent);
 
                             //updateUI(user);
@@ -205,7 +194,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-
     private Boolean validateUsername() {
         String val = username.getEditText().getText().toString();
         String noWhiteSpace = "\\A\\w{4,20}\\z";
@@ -213,8 +201,7 @@ public class LoginActivity extends AppCompatActivity {
             username.setError("Field cannot be empty");
             return false;
 
-        }
-        else if(val.length() >= 15){
+        } else if (val.length() >= 15) {
             username.setError("Username too Long");
             return false;
         }
@@ -228,6 +215,7 @@ public class LoginActivity extends AppCompatActivity {
             return true;
         }
     }
+
     private Boolean validatePassword() {
         String val = password.getEditText().getText().toString();
         if (val.isEmpty()) {
@@ -240,20 +228,21 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public
-    void loginUser() {
+    public void loginUser() {
         //Validate Login Info
         if (!validateUsername() | !validatePassword()) {
             return;
-        }
-        else {
+        } else {
             isUser();
         }
     }
 
     private void isUser() {
-        final String userEnteredUsername = username.getEditText().getText().toString();
-        final String userEnteredPassword = password.getEditText().getText().toString();
+//        final String userEnteredUsername = username.getEditText().getText().toString();
+//        final String userEnteredPassword = password.getEditText().getText().toString();
+
+        final String userEnteredUsername = "hh";
+        final String userEnteredPassword = "Asd@";
         //final String userEnteredEmail =
 
 //        DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("users");
@@ -261,90 +250,160 @@ public class LoginActivity extends AppCompatActivity {
 //        DatabaseReference zone1NameRef = zone1Ref.child("ZNAME");
 
 
+        final DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("HomeCooker");
+        refrence.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                    @Override
+                                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                                            boolean a = data.child("username").getValue().toString().equals(userEnteredUsername);
 
-
-
-        final DatabaseReference refrence = FirebaseDatabase.getInstance().getReference("users");
-       // String mkey = refrence.push().getKey();
-
-        final Query checkuser = refrence.orderByChild("username").equalTo(userEnteredUsername);
-
-        checkuser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-//                List<String> propertyKeys = new ArrayList<>();
-//                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()){
 //
-//                        propertyKeys.add(userSnapshot.getKey());
-//                        String advertise = userSnapshot.getValue(String.class);
-//                        //property.add(advertise);
+                                                            if (data.child("username").getValue().toString().equals(userEnteredUsername)) {
+
+                                                                check = true;
+                                                                 passwordFromDB = data.child("password").getValue(String.class);
+                                                                 homeCookerId = data.getKey();
+                                                                 break;
+
+                                                            } else {
+                                                                check = false;
+                                                            }
+
+                                                        }
+                                                        if (dataSnapshot.exists() && check == true) {
+
+                                                            username.setError(null);
+
+                                                            username.setErrorEnabled(false);
+                                                            //String passwordFromDB = dataSnapshot.child(userEnteredUsername).child("password").getValue(String.class);
+                                                            if (passwordFromDB.equals(userEnteredPassword)) {
+
+
+                                                                username.setError(null);
+                                                                username.setErrorEnabled(false);
+                                                                String nameFromDb = dataSnapshot.child(userEnteredUsername).child("name").getValue(String.class);
+                                                                String usernameFromDb = dataSnapshot.child(userEnteredUsername).child("username").getValue(String.class);
+                                                                String phonenoFromDb = dataSnapshot.child(userEnteredUsername).child("phoneNo").getValue(String.class);
+                                                                String emailFromDb = dataSnapshot.child(userEnteredUsername).child("email").getValue(String.class);
+                                                                SharedPreferences.Editor editor = getSharedPreferences(UserHelperClass.shared, MODE_PRIVATE).edit();
+                                                                editor.putString("name", nameFromDb);
+                                                                editor.putString("username", usernameFromDb);
+                                                                editor.putString("phoneno", phonenoFromDb);
+                                                                editor.putString("password", passwordFromDB);
+                                                                editor.putString("email", emailFromDb);
+                                                                editor.putString("homeCookerId",homeCookerId);
+                                                                editor.commit();
+                                                                UserHelperClass.whichUser = true;
 //
-//                }
-                //dataStatus.DataIsLoaded(property, propertyKeys);
+                                                                //else {
+                                                                Intent intent = new Intent(getApplicationContext(), Home_cooker_DashBoard.class);// Onboarding Activity pe
+                                                                startActivity(intent);
+                                                                finish();
 
-                if(dataSnapshot.exists()){
+                                                                //}
 
-                    username.setError(null);
-
-                    username.setErrorEnabled(false);
-                    String passwordFromDB = dataSnapshot.child(userEnteredUsername).child("password").getValue(String.class);
-                    if(passwordFromDB.equals(userEnteredPassword)){
-
-
-                        username.setError(null);
-                        username.setErrorEnabled(false);
-                    String nameFromDb =dataSnapshot.child(userEnteredUsername).child("name").getValue(String.class);
-                    String usernameFromDb =dataSnapshot.child(userEnteredUsername).child("username").getValue(String.class);
-                    String phonenoFromDb =dataSnapshot.child(userEnteredUsername).child("phoneNo").getValue(String.class);
-                    String emailFromDb =dataSnapshot.child(userEnteredUsername).child("email").getValue(String.class);
-                        SharedPreferences.Editor editor = getSharedPreferences(UserHelperClass.shared,MODE_PRIVATE).edit();
-                        editor.putString("name", nameFromDb);
-                        editor.putString("username",usernameFromDb);
-                        editor.putString("phoneno",phonenoFromDb);
-                        editor.putString("password",passwordFromDB);
-                        editor.putString("email",emailFromDb);
-                        editor.commit();
-                        UserHelperClass.whichUser = true;
-//                        onBoardgingScreen = getSharedPreferences("onboardingscreen",MODE_PRIVATE);
-//                        boolean isFirstTime = onBoardgingScreen.getBoolean("firstTime",true);
-//                        if(isFirstTime){
-//                            SharedPreferences.Editor editor1 = onBoardgingScreen.edit();
-//                            editor1.putBoolean("firstTime",false);
-//                            editor1.commit();
-//                            Intent intent = new Intent(getApplicationContext(),DashboardActivity.class);// Onboarding Activity pe
-////                        intent.putExtra("simplelogin","yes");
-////                        intent.putExtra("name",nameFromDb);
-////                        intent.putExtra("username",usernameFromDb);
-////                        intent.putExtra("phoneno",phonenoFromDb);
-////                        intent.putExtra("email",emailFromDb);
-////                        intent.putExtra("password",passwordFromDB);
-//                            startActivity(intent);
-//                            finish();
-//                        }
-                        //else {
-                            Intent intent = new Intent(getApplicationContext(), UserDashboard.class);// Onboarding Activity pe
-                            startActivity(intent);
-                            finish();
-
-                        //}
-
-                    }
-                    else {
-                        password.setError("Wrong Password");
-                        password.requestFocus();
-                    }
-                }
-                else {
-                    username.setError("No such User Exist");
-                    username.requestFocus();
-                }
-            }
-
+                                                            } else {
+                                                                password.setError("Wrong Password");
+                                                                password.requestFocus();
+                                                            }
+                                                        } else {
+                                                            username.setError("No such User Exist");
+                                                            username.requestFocus();
+                                                        }
+                                                    }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+
+
+        }
     }
-}
+
+
+
+
+       // String mkey = refrence.push().getKey();
+
+//        final Query checkuser = refrence.orderByChild("username").equalTo(userEnteredUsername);
+//
+//        checkuser.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+////                List<String> propertyKeys = new ArrayList<>();
+////                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()){
+////
+////                        propertyKeys.add(userSnapshot.getKey());
+////                        String advertise = userSnapshot.getValue(String.class);
+////                        //property.add(advertise);
+////
+////                }
+//                //dataStatus.DataIsLoaded(property, propertyKeys);
+//
+//                if(dataSnapshot.exists()){
+//
+//                    username.setError(null);
+//
+//                    username.setErrorEnabled(false);
+//                    String passwordFromDB = dataSnapshot.child(userEnteredUsername).child("password").getValue(String.class);
+//                    if(passwordFromDB.equals(userEnteredPassword)){
+//
+//
+//                        username.setError(null);
+//                        username.setErrorEnabled(false);
+//                    String nameFromDb =dataSnapshot.child(userEnteredUsername).child("name").getValue(String.class);
+//                    String usernameFromDb =dataSnapshot.child(userEnteredUsername).child("username").getValue(String.class);
+//                    String phonenoFromDb =dataSnapshot.child(userEnteredUsername).child("phoneNo").getValue(String.class);
+//                    String emailFromDb =dataSnapshot.child(userEnteredUsername).child("email").getValue(String.class);
+//                        SharedPreferences.Editor editor = getSharedPreferences(UserHelperClass.shared,MODE_PRIVATE).edit();
+//                        editor.putString("name", nameFromDb);
+//                        editor.putString("username",usernameFromDb);
+//                        editor.putString("phoneno",phonenoFromDb);
+//                        editor.putString("password",passwordFromDB);
+//                        editor.putString("email",emailFromDb);
+//                        editor.commit();
+//                        UserHelperClass.whichUser = true;
+////                        onBoardgingScreen = getSharedPreferences("onboardingscreen",MODE_PRIVATE);
+////                        boolean isFirstTime = onBoardgingScreen.getBoolean("firstTime",true);
+////                        if(isFirstTime){
+////                            SharedPreferences.Editor editor1 = onBoardgingScreen.edit();
+////                            editor1.putBoolean("firstTime",false);
+////                            editor1.commit();
+////                            Intent intent = new Intent(getApplicationContext(),DashboardActivity.class);// Onboarding Activity pe
+//////                        intent.putExtra("simplelogin","yes");
+//////                        intent.putExtra("name",nameFromDb);
+//////                        intent.putExtra("username",usernameFromDb);
+//////                        intent.putExtra("phoneno",phonenoFromDb);
+//////                        intent.putExtra("email",emailFromDb);
+//////                        intent.putExtra("password",passwordFromDB);
+////                            startActivity(intent);
+////                            finish();
+////                        }
+//                        //else {
+//                            Intent intent = new Intent(getApplicationContext(), UserDashboard.class);// Onboarding Activity pe
+//                            startActivity(intent);
+//                            finish();
+//
+//                        //}
+//
+//                    }
+//                    else {
+//                        password.setError("Wrong Password");
+//                        password.requestFocus();
+//                    }
+//                }
+//                else {
+//                    username.setError("No such User Exist");
+//                    username.requestFocus();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
+

@@ -3,7 +3,7 @@
     package="com.example.myfirebasejavaproject">
 
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -13,21 +13,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Common.uploadRetrieveImages">
+        <activity android:name=".HomeCooker.Home_cooker_DashBoard">
 
         </activity>
-        <activity android:name=".Common.practiceDetailActivity" />
-        <activity android:name=".Common.retrieveDataPractice">
+        <activity android:name=".common.uploadRetrieveImages"></activity>
+        <activity android:name=".common.practiceDetailActivity" />
+        <activity android:name=".common.retrieveDataPractice"></activity>
+        <activity android:name=".user.UserDashboard">
 
         </activity>
-        <activity android:name=".User.UserDashboard" >
-
-        </activity>
-        <activity android:name=".Common.OnBoarding" />
+        <activity android:name=".common.OnBoarding" />
         <activity android:name=".app.SignInWithGoogle" />
         <activity android:name=".app.Verify_phone_page" />
         <activity android:name=".app.Userprofile" />
-        <activity android:name=".app.LoginActivity" >
+        <activity android:name=".app.LoginActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,8 +35,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".app.DashboardActivity" />
-        <activity android:name=".Common.SplashActivity" />
-        <activity android:name=".Tabs.SignUpTabs" />
+        <activity android:name=".common.SplashActivity" />
+        <activity android:name=".tabs.SignUpTabs"></activity>
 
         <meta-data
             android:name="preloaded_fonts"

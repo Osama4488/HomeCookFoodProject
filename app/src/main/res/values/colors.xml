@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#fece2f</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#3F51B5</color>
+    <color name="colorAccent">#191919</color>
     <color name="white">#ffffff</color>
 
 
@@ -12,6 +12,8 @@
     <color name="home_background">#f2f5f8</color>
     <color name="banner_background">#F1E9CE</color>
     <color name="banner_background_light">#56F1E9CE</color>
+    <color name="light_white">#F5F5F5</color>
+    <color name="black">#000000</color>
 
     <!--       CARD COLORS -->
     

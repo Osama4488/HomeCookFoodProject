@@ -1,47 +1,58 @@
-package com.example.myfirebasejavaproject.User;
+package com.example.myfirebasejavaproject.user;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.myfirebasejavaproject.Common.retrieveDataPractice;
-import com.example.myfirebasejavaproject.Models.UserHelperClass;
-import com.example.myfirebasejavaproject.Models.practiceModel;
+import com.example.myfirebasejavaproject.models.UserHelperClass;
 import com.example.myfirebasejavaproject.R;
 import com.example.myfirebasejavaproject.adapters.HomeAdapter.FeaturedAdapter;
 import com.example.myfirebasejavaproject.adapters.HomeAdapter.FeaturedHelperClass;
 import com.example.myfirebasejavaproject.adapters.HomeAdapter.MostViewedAdapter;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDashboard extends AppCompatActivity {
+public class UserDashboard extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    //Variables
+    static final float END_SCALE = 0.7f;
     RecyclerView featuredRecycler;
     RecyclerView mostviewedRecycler;
     RecyclerView.Adapter adapter;
     private FeaturedAdapter mAdapter;
+
     private DatabaseReference refrence;
     private List<UserHelperClass> mDatalist;
     private static SharedPreferences mPrefs;
     private static final String PREFS_TAG = "SharedPrefs";
     private static final String PRODUCT_TAG = "MyProduct";
     Context mContext;
+    LinearLayout contentView;
+
+    // Drawer Menu
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    ImageView menuIcon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +63,88 @@ public class UserDashboard extends AppCompatActivity {
         //Hooks
         featuredRecycler = findViewById(R.id.featured_recycler);
         mostviewedRecycler = findViewById(R.id.mostviewed_recycler);
+        menuIcon = findViewById(R.id.menu_icon);
+        contentView = findViewById(R.id.content);
         featuredRecycler();
         mostViewedRecycler();
 
 
+        //Menu Hooks
+        drawerLayout = findViewById(R.id.drawer_layout1);
+        navigationView = findViewById(R.id.navigation_view1);
+
+
+        navigationDrawer();
+
     }
+
+
+
+    //Navigation Drawer Functions
+    private void navigationDrawer() {
+
+        //Navigation Drawer
+        navigationView.bringToFront();
+        navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_home);
+        menuIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawerLayout.isDrawerVisible(GravityCompat.START))
+                    drawerLayout.closeDrawer(GravityCompat.START);
+
+                else
+                    drawerLayout.openDrawer(GravityCompat.START);
+
+            }
+        });
+
+        animateNavigationDrawer();
+    }
+
+    private void animateNavigationDrawer() {
+
+        drawerLayout.setScrimColor(getResources().getColor(R.color.colorPrimary));
+        drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+                // Scale the View based on current slide offset
+                final float diffScaledOffset = slideOffset * (1 - END_SCALE);
+                final float offsetScale = 1 - diffScaledOffset;
+                contentView.setScaleX(offsetScale);
+                contentView.setScaleY(offsetScale);
+
+                // Translate the View, accounting for the scaled width
+                final float xOffset = drawerView.getWidth() * slideOffset;
+                final float xOffsetDiff = contentView.getWidth() * diffScaledOffset / 2;
+                final float xTranslation = xOffset - xOffsetDiff;
+                contentView.setTranslationX(xTranslation);
+            }
+        });
+
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerVisible(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else {
+            super.onBackPressed();
+        }
+
+
+    }
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return true;
+    }
+
+
+
 
     private void featuredRecycler() {
 
@@ -116,4 +204,6 @@ public class UserDashboard extends AppCompatActivity {
         adapter = new MostViewedAdapter(mostViewedLocation);
         mostviewedRecycler.setAdapter(adapter);
     }
+
+
 }

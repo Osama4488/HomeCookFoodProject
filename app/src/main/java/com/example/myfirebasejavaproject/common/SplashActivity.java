@@ -1,4 +1,4 @@
-package com.example.myfirebasejavaproject.Common;
+package com.example.myfirebasejavaproject.common;
 
 import androidx.appcompat.app.AppCompatActivity;
 

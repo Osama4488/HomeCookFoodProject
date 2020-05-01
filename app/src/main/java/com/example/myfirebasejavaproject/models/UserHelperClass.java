@@ -1,9 +1,9 @@
-package com.example.myfirebasejavaproject.Models;
+package com.example.myfirebasejavaproject.models;
 
 public class UserHelperClass {
     String name,username,email,phoneNo,password,address,type,mImageUrl;
    public static boolean whichUser = false;
-   public static String shared = "abc";
+   public static String shared = "HomeCookerDetails";
 
 
 
@@ -12,7 +12,15 @@ public class UserHelperClass {
     }
 
 
-
+    public UserHelperClass(String name, String username, String email, String phoneNo, String password, String address,String type) {
+        this.name = name;
+        this.address =address;
+        this.username = username;
+        this.email = email;
+        this.phoneNo = phoneNo;
+        this.password = password;
+        this.type = type;
+    }
 
     public UserHelperClass(String name, String username, String email, String phoneNo, String password, String address,String type,String image) {
         this.name = name;

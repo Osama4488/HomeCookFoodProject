@@ -1,4 +1,4 @@
-package com.example.myfirebasejavaproject.Common;
+package com.example.myfirebasejavaproject.common;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myfirebasejavaproject.R;
-import com.google.android.gms.auth.api.signin.internal.Storage;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -29,7 +28,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
-import com.example.myfirebasejavaproject.Models.praticeImageModel;
+import com.example.myfirebasejavaproject.models.praticeImageModel;
 
 public class uploadRetrieveImages extends AppCompatActivity {
 

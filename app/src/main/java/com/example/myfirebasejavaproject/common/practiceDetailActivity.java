@@ -1,4 +1,4 @@
-package com.example.myfirebasejavaproject.Common;
+package com.example.myfirebasejavaproject.common;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.example.myfirebasejavaproject.Models.practiceModel;
+import com.example.myfirebasejavaproject.models.practiceModel;
 import com.example.myfirebasejavaproject.R;
-import com.example.myfirebasejavaproject.Models.practiceAdapter;
+import com.example.myfirebasejavaproject.models.practiceAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

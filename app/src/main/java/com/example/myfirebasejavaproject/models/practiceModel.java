@@ -1,4 +1,4 @@
-package com.example.myfirebasejavaproject.Models;
+package com.example.myfirebasejavaproject.models;
 
 import androidx.annotation.Nullable;
 

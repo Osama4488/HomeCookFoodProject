@@ -6,14 +6,13 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.myfirebasejavaproject.Models.UserHelperClass;
+import com.example.myfirebasejavaproject.models.UserHelperClass;
 import com.example.myfirebasejavaproject.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;

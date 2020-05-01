@@ -1,4 +1,4 @@
-package com.example.myfirebasejavaproject.Models;
+package com.example.myfirebasejavaproject.models;
 
 public class praticeImageModel {
 
