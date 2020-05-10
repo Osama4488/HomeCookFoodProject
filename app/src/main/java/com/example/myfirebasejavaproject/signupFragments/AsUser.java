@@ -69,7 +69,8 @@ public class AsUser extends Fragment {
                 registerUser();
                 if(check == 2) {
                     rootNode = FirebaseDatabase.getInstance();
-                    refrence = rootNode.getReference("users");
+//                    refrence = rootNode.getReference("users");
+                    refrence = rootNode.getReference("HomeCooker");
 
                     String name = regName.getEditText().getText().toString();
                     String username = regUsername.getEditText().getText().toString();
@@ -93,6 +94,8 @@ public class AsUser extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(), "User Sign Up Sucessfully", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
+                    getActivity().finish();
+
 
                 }
             }

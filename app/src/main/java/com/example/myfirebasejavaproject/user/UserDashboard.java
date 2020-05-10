@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -17,10 +18,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.myfirebasejavaproject.app.LoginActivity;
 import com.example.myfirebasejavaproject.models.UserHelperClass;
 import com.example.myfirebasejavaproject.R;
 import com.example.myfirebasejavaproject.adapters.HomeAdapter.FeaturedAdapter;
-import com.example.myfirebasejavaproject.adapters.HomeAdapter.FeaturedHelperClass;
+import com.example.myfirebasejavaproject.models.FeaturedHelperClass;
 import com.example.myfirebasejavaproject.adapters.HomeAdapter.MostViewedAdapter;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -140,6 +142,19 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
     }
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        switch (menuItem.getItemId()){
+            case R.id.nav_logout:
+                startActivity(new Intent(UserDashboard.this, LoginActivity.class));
+                SharedPreferences pref = getSharedPreferences(UserHelperClass.shared,MODE_PRIVATE);
+                pref.edit().clear().commit();
+                finish();
+                break;
+
+                default:
+                    return true;
+        }
+
         return true;
     }
 
@@ -157,10 +172,19 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
                     UserHelperClass model = postSnapshot.getValue(UserHelperClass.class);
-                    mDatalist.add(model);
+                   // FeaturedHelperClass model1 = postSnapshot.getValue(FeaturedHelperClass.class);
+                    if(model.getType().equals("User")){
+
+                    }
+                    else {
+                        model.setCookerId(postSnapshot.getKey());
+                        mDatalist.add(model);
+                    }
+
                 }
-                mAdapter = new FeaturedAdapter(mDatalist);
+                mAdapter = new FeaturedAdapter(mDatalist,UserDashboard.this);
                 featuredRecycler.setAdapter(mAdapter);
             }
 
@@ -191,6 +215,61 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 
 
     }
+
+
+//    private void featuredRecycler() {
+//
+//        featuredRecycler.setHasFixedSize(true);
+//        featuredRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        mDatalist = new ArrayList<>();
+//        refrence = FirebaseDatabase.getInstance().getReference("HomeCooker");
+//
+//        refrence.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+//
+//                    UserHelperClass model = postSnapshot.getValue(UserHelperClass.class);
+//                    if(model.getType().equals("User")){
+//
+//                    }
+//                    else {
+//                        model.setCookerId(postSnapshot.getKey());
+//                        mDatalist.add(model);
+//                    }
+//
+//                }
+//                mAdapter = new FeaturedAdapter(mDatalist);
+//                featuredRecycler.setAdapter(mAdapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                Toast.makeText(mContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+////        Gson gson = new Gson();
+////        String json = mPrefs.getString(PRODUCT_TAG, "");
+//        // practiceModel obj = gson.fromJson(json, practiceModel.class);
+//
+////
+////        ArrayList<practiceModel> featuredlocation = new ArrayList<>();
+//////        featuredlocation.add(new retrieveDataPractice(R.drawable.mcdoland,"Mcdonald's","ajsd haod aosd noaidsn nadsn nasdn"));
+//////        featuredlocation.add(new retrieveDataPractice(R.drawable.profile_image,"Eden Robe","ajsd haod aosd noaidsn nadsn nasdn"));
+//////        featuredlocation.add(new retrieveDataPractice(R.drawable.ic_speaker_phone_black_24dp,"Sweet Salty","ajsd haod aosd noaidsn nadsn nasdn"));
+////
+////        featuredlocation.add(new practiceModel("Mcdonald's", "ajsd haod aosd noaidsn nadsn nasdn"));
+////        featuredlocation.add(new practiceModel("Eden Robe", "ajsd haod aosd noaidsn nadsn nasdn"));
+////        featuredlocation.add(new practiceModel("Sweet Salty", "ajsd haod aosd noaidsn nadsn nasdn"));
+////
+////        adapter = new FeaturedAdapter(featuredlocation);
+////        featuredRecycler.setAdapter(adapter);
+////
+////        GradientDrawable gradient1 = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{0xffeff400, 0xffaff600});
+//
+//
+//    }
 
     private void mostViewedRecycler() {
         //mostviewedRecycler.setHasFixedSize(true);

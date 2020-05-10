@@ -18,6 +18,7 @@ import com.example.myfirebasejavaproject.HomeCooker.Home_cooker_DashBoard;
 import com.example.myfirebasejavaproject.models.UserHelperClass;
 import com.example.myfirebasejavaproject.R;
 import com.example.myfirebasejavaproject.tabs.SignUpTabs;
+import com.example.myfirebasejavaproject.user.UserDashboard;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -55,11 +56,28 @@ boolean check = false;
     @Override
     protected void onStart() {
         super.onStart();
-        FirebaseUser user = mAuth.getCurrentUser();
-        if (user != null) {
-            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+//        FirebaseUser user = mAuth.getCurrentUser();
+//        if (user != null) {
+//            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+//            startActivity(intent);
+//        }
+        SharedPreferences editor = getSharedPreferences(UserHelperClass.shared, MODE_PRIVATE);
+        String exist = editor.getString("username", "");
+        String type = editor.getString("type", "");
+        if(!exist.equals("")  && type.equals("User")  ){
+            Intent intent = new Intent(getApplicationContext(), UserDashboard.class);// Onboarding Activity pe
             startActivity(intent);
+            finish();
         }
+        else if(!exist.equals("")  && type.equals("Homecooker")){
+            Intent intent = new Intent(getApplicationContext(), Home_cooker_DashBoard.class);// Onboarding Activity pe
+            startActivity(intent);
+            finish();
+        }
+        else {
+
+        }
+
     }
 
     @Override
@@ -238,11 +256,11 @@ boolean check = false;
     }
 
     private void isUser() {
-//        final String userEnteredUsername = username.getEditText().getText().toString();
-//        final String userEnteredPassword = password.getEditText().getText().toString();
+        final String userEnteredUsername = username.getEditText().getText().toString();
+        final String userEnteredPassword = password.getEditText().getText().toString();
 
-        final String userEnteredUsername = "hh";
-        final String userEnteredPassword = "Asd@";
+//        final String userEnteredUsername = "b";
+//        final String userEnteredPassword = "Asd@";
         //final String userEnteredEmail =
 
 //        DatabaseReference zonesRef = FirebaseDatabase.getInstance().getReference("users");
@@ -255,6 +273,7 @@ boolean check = false;
                                                     @Override
                                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                         for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                                            String us = data.child("username").getValue().toString();
                                                             boolean a = data.child("username").getValue().toString().equals(userEnteredUsername);
 
 //
@@ -281,24 +300,35 @@ boolean check = false;
 
                                                                 username.setError(null);
                                                                 username.setErrorEnabled(false);
-                                                                String nameFromDb = dataSnapshot.child(userEnteredUsername).child("name").getValue(String.class);
-                                                                String usernameFromDb = dataSnapshot.child(userEnteredUsername).child("username").getValue(String.class);
-                                                                String phonenoFromDb = dataSnapshot.child(userEnteredUsername).child("phoneNo").getValue(String.class);
-                                                                String emailFromDb = dataSnapshot.child(userEnteredUsername).child("email").getValue(String.class);
+                                                                String nameFromDb = dataSnapshot.child(homeCookerId).child("name").getValue(String.class);
+                                                                String usernameFromDb = dataSnapshot.child(homeCookerId).child("username").getValue(String.class);
+                                                                String phonenoFromDb = dataSnapshot.child(homeCookerId).child("phoneNo").getValue(String.class);
+                                                                String emailFromDb = dataSnapshot.child(homeCookerId).child("email").getValue(String.class);
+                                                                String mImageUri = dataSnapshot.child(homeCookerId).child("mImageUrl").getValue(String.class);
+                                                                String typeFromDb = dataSnapshot.child(homeCookerId).child("type").getValue(String.class);
                                                                 SharedPreferences.Editor editor = getSharedPreferences(UserHelperClass.shared, MODE_PRIVATE).edit();
                                                                 editor.putString("name", nameFromDb);
                                                                 editor.putString("username", usernameFromDb);
                                                                 editor.putString("phoneno", phonenoFromDb);
                                                                 editor.putString("password", passwordFromDB);
                                                                 editor.putString("email", emailFromDb);
+                                                                editor.putString("imageurl",mImageUri);
                                                                 editor.putString("homeCookerId",homeCookerId);
+                                                                editor.putString("type",typeFromDb);
                                                                 editor.commit();
                                                                 UserHelperClass.whichUser = true;
 //
-                                                                //else {
-                                                                Intent intent = new Intent(getApplicationContext(), Home_cooker_DashBoard.class);// Onboarding Activity pe
-                                                                startActivity(intent);
-                                                                finish();
+                                                                if(typeFromDb.equals("User")){
+                                                                    Intent intent = new Intent(getApplicationContext(), UserDashboard.class);// Onboarding Activity pe
+                                                                    startActivity(intent);
+                                                                    finish();
+                                                                }
+                                                                else {
+                                                                    Intent intent = new Intent(getApplicationContext(), Home_cooker_DashBoard.class);// Onboarding Activity pe
+                                                                    startActivity(intent);
+                                                                    finish();
+                                                                }
+
 
                                                                 //}
 

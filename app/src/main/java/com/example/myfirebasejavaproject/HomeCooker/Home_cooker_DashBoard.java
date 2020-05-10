@@ -3,17 +3,23 @@ package com.example.myfirebasejavaproject.HomeCooker;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.myfirebasejavaproject.app.LoginActivity;
 import com.example.myfirebasejavaproject.models.Main_food_model;
 import com.example.myfirebasejavaproject.models.Sub_food_Model;
 import com.example.myfirebasejavaproject.models.UserHelperClass;
@@ -23,7 +29,10 @@ import com.example.myfirebasejavaproject.adapters.dialogsAdapter.DialogAddSubFoo
 import com.example.myfirebasejavaproject.adapters.dialogsAdapter.DialogUpdateMainFoodAdapter;
 import com.example.myfirebasejavaproject.adapters.dialogsAdapter.DialogUpdateSubFoodAdapter;
 import com.example.myfirebasejavaproject.adapters.HomeCookerAdapter.MainAdapter;
+import com.example.myfirebasejavaproject.tabs.HomeCookerProfileTab;
+import com.example.myfirebasejavaproject.user.UserDashboard;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +45,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAddSubFoodAdapter.DialogListener,DialogAddMainFoodAdapter.DialogListener, DialogUpdateMainFoodAdapter.DialogListener, DialogUpdateSubFoodAdapter.DialogListener {
+public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAddSubFoodAdapter.DialogListener, DialogAddMainFoodAdapter.DialogListener, DialogUpdateMainFoodAdapter.DialogListener, DialogUpdateSubFoodAdapter.DialogListener, NavigationView.OnNavigationItemSelectedListener {
 
     String _USERNAME, _EMAIL, _PASSWORD, _PHONENO, _NAME, _KEY;
     DatabaseReference reference;
@@ -51,11 +60,22 @@ public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAd
     //private CardView cardview;
     String mainFoodid;
     String getItemClickPosition = "clicked";
+
+    private DrawerLayout drawer;
+    private NavigationView navigation;
+    private ImageView menuIcon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_cooker__dash_board);
         main_food_recycler = findViewById(R.id.main_food_recycler);
+
+        drawer = findViewById(R.id.drawer_layout2);
+        navigation = findViewById(R.id.navigation_view2);
+
+        menuIcon = findViewById(R.id.menu_icon);
+        navigationDrawer();
 
 
         floatingActionButton = findViewById(R.id.addMainFood);
@@ -68,12 +88,10 @@ public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAd
         getHomeCookerData();
 
 
-
-
-         reference = FirebaseDatabase.getInstance().getReference("HomeCooker");
+        reference = FirebaseDatabase.getInstance().getReference("HomeCooker");
 
         setRecyclerView();
-     //   setMainFoodRecycler();
+        //   setMainFoodRecycler();
 
 //        cardview = findViewById(R.id.card_viewMainFood);
 //        cardview.setOnClickListener(new View.OnClickListener() {
@@ -86,29 +104,58 @@ public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAd
 //        });
     }
 
-    public void setRecyclerView(){
+    private void navigationDrawer() {
+
+        //Navigation Drawer
+        navigation.bringToFront();
+        navigation.setNavigationItemSelectedListener(this);
+        navigation.setCheckedItem(R.id.nav_home);
+        menuIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (drawer.isDrawerVisible(GravityCompat.START))
+                    drawer.closeDrawer(GravityCompat.START);
+
+                else
+                    drawer.openDrawer(GravityCompat.START);
+
+            }
+        });
+
+        //animateNavigationDrawer();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerVisible(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    public void setRecyclerView() {
         mDatalist = new ArrayList<>();
         main_food_recycler.setHasFixedSize(true);
         main_food_recycler.setLayoutManager(new LinearLayoutManager(this));
-        mAdapter = new MainAdapter(this,mDatalist);
+        mAdapter = new MainAdapter(this, mDatalist);
         main_food_recycler.setAdapter(mAdapter);
         DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference usersRef = rootRef.child("HomeCooker").child(_KEY).child("MainFood");
         usersRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-               // for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                // for (DataSnapshot datas : dataSnapshot.getChildren()) {
 //                    Main_food_model model = datas.getValue(Main_food_model.class);
 //                    model.setMainFoodId(datas.getKey());
-               //int count =   (int) dataSnapshot.getChildrenCount() ;
+                //int count =   (int) dataSnapshot.getChildrenCount() ;
                 Main_food_model model = dataSnapshot.getValue(Main_food_model.class);
                 model.setMainFoodId(dataSnapshot.getKey());
 
 
-
-                    mDatalist.add(model);
-                    //mAdapter.notifyItemInserted(count);
-                    mAdapter.notifyDataSetChanged();
+                mDatalist.add(model);
+                //mAdapter.notifyItemInserted(count);
+                mAdapter.notifyDataSetChanged();
                 //}
 
             }
@@ -116,12 +163,12 @@ public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAd
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                SharedPreferences prefs = getSharedPreferences(getItemClickPosition,MODE_PRIVATE);
-                int postion = prefs.getInt("position",0);
+                SharedPreferences prefs = getSharedPreferences(getItemClickPosition, MODE_PRIVATE);
+                int postion = prefs.getInt("position", 0);
                 Main_food_model model = dataSnapshot.getValue(Main_food_model.class);
                 model.setMainFoodId(dataSnapshot.getKey());
 
-                mDatalist.set(postion,model);
+                mDatalist.set(postion, model);
                 mAdapter.notifyDataSetChanged();
             }
 
@@ -147,7 +194,7 @@ public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAd
 
     }
 
-    public  void setMainFoodRecycler() {
+    public void setMainFoodRecycler() {
 
         main_food_recycler.setHasFixedSize(true);
         main_food_recycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -161,8 +208,8 @@ public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAd
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot datas : dataSnapshot.getChildren()) {
-                     Main_food_model model = datas.getValue(Main_food_model.class);
-                     model.setMainFoodId(datas.getKey());
+                    Main_food_model model = datas.getValue(Main_food_model.class);
+                    model.setMainFoodId(datas.getKey());
                     //Main_food_model model = (Main_food_model) datas.child("name").getValue();
                     //String name = datas.child("name").getValue().toString();
                     //String name=datas.child("name").getValue().toString();
@@ -173,7 +220,7 @@ public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAd
                     //get other items
                 }
 
-                 mainAdapter = new MainAdapter(Home_cooker_DashBoard.this,mDatalist);
+                mainAdapter = new MainAdapter(Home_cooker_DashBoard.this, mDatalist);
                 //mainAdapter.notifyDataSetChanged();
                 main_food_recycler.setAdapter(mainAdapter);
             }
@@ -234,15 +281,14 @@ public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAd
 
 
     @Override
-    public void applySubFood(String subFoodName,String subFoodprice,String subFooDesc) {
+    public void applySubFood(String subFoodName, String subFoodprice, String subFooDesc) {
 
 
         SharedPreferences prefs = getSharedPreferences("myMainFood", MODE_PRIVATE);
-        mainFoodid = prefs.getString("mainfoodId",null);
+        mainFoodid = prefs.getString("mainfoodId", null);
 
 
-
-        Sub_food_Model model = new Sub_food_Model(subFoodName,subFoodprice,subFooDesc);
+        Sub_food_Model model = new Sub_food_Model(subFoodName, subFoodprice, subFooDesc);
 //        reference.child(_KEY).push().setValue(model);
         reference.child(_KEY).child("MainFood").child(mainFoodid).child("SubFood").push().setValue(model);
 
@@ -271,10 +317,10 @@ public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAd
     public void updateMainFood(String FoodName) {
         final DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference("HomeCooker");
         SharedPreferences prefs = getSharedPreferences("myMainFood", MODE_PRIVATE);
-        mainFoodid = prefs.getString("mainfoodId",null);
-        Map<String,Object> updatedValue = new HashMap<>();
-        String link = _KEY+"/MainFood/"+mainFoodid+"/name";
-        updatedValue.put(link,FoodName);
+        mainFoodid = prefs.getString("mainfoodId", null);
+        Map<String, Object> updatedValue = new HashMap<>();
+        String link = _KEY + "/MainFood/" + mainFoodid + "/name";
+        updatedValue.put(link, FoodName);
         ref1.updateChildren(updatedValue);
         //setMainFoodRecycler();
         //setRecyclerView();
@@ -298,17 +344,37 @@ public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAd
     @Override
     public void updateSubFood(String subFoodName, String subFoodprice, String subFooDesc) {
         SharedPreferences ref2 = getSharedPreferences("mySubFoodId", Context.MODE_PRIVATE);
-        String subFoodId = ref2.getString("subFoodId",null);
+        String subFoodId = ref2.getString("subFoodId", null);
         final DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference("HomeCooker");
         SharedPreferences prefs = getSharedPreferences("myMainFood", MODE_PRIVATE);
-        mainFoodid = prefs.getString("mainfoodId",null);
+        mainFoodid = prefs.getString("mainfoodId", null);
 
-        Map<String,Object> updatedValue = new HashMap<>();
-        String link = _KEY+"/MainFood/"+mainFoodid+"/SubFood/"+subFoodId+"/";
-        Sub_food_Model model = new Sub_food_Model(subFoodName,subFoodprice,subFooDesc);
-        updatedValue.put(link,model);
+        Map<String, Object> updatedValue = new HashMap<>();
+        String link = _KEY + "/MainFood/" + mainFoodid + "/SubFood/" + subFoodId + "/";
+        Sub_food_Model model = new Sub_food_Model(subFoodName, subFoodprice, subFooDesc);
+        updatedValue.put(link, model);
         ref1.updateChildren(updatedValue);
         Toast.makeText(this, "Value Updated", Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        int id = menuItem.getItemId();
+        switch (id) {
+            case R.id.nav_profile:
+                startActivity(new Intent(Home_cooker_DashBoard.this, HomeCookerProfileTab.class));
+                break;
+            case R.id.nav_logout:
+                startActivity(new Intent(Home_cooker_DashBoard.this, LoginActivity.class));
+                SharedPreferences pref = getSharedPreferences(UserHelperClass.shared,MODE_PRIVATE);
+                pref.edit().clear().commit();
+                finish();
+                break;
+            default:
+                return true;
+        }
+
+        return true;
     }
 }

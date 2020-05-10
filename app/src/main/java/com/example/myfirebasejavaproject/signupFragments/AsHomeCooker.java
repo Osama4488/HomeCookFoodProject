@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.myfirebasejavaproject.HomeCooker.SetTimingsCookerProfile;
 import com.example.myfirebasejavaproject.models.UserHelperClass;
 import com.example.myfirebasejavaproject.R;
 import com.example.myfirebasejavaproject.app.LoginActivity;
@@ -38,7 +39,7 @@ public class AsHomeCooker extends Fragment {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     String mImageurl;
-    private Button mButtonChooseImage;
+    private Button mButtonChooseImage,setTime;
     TextInputLayout regName,regUsername,regEmail,regPhoneNo,regPassword,regAdress;
     Button regBtn,regToLoginbtn;
     public static  int check = 1;
@@ -68,6 +69,13 @@ public class AsHomeCooker extends Fragment {
         regBtn = view.findViewById(R.id.regBtn);
         regToLoginbtn = view.findViewById(R.id.tologin);
         regAdress = view.findViewById(R.id.address);
+        setTime = view.findViewById(R.id.button_time);
+        setTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTimeFunction();
+            }
+        });
         mButtonChooseImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,7 +185,11 @@ public class AsHomeCooker extends Fragment {
         return view;
     }
 
+private void setTimeFunction(){
+        Intent intent = new Intent(getActivity().getApplicationContext(), SetTimingsCookerProfile.class);
+        startActivity(intent);
 
+}
 
     private void openFileChooser() {
         Intent intent = new Intent();

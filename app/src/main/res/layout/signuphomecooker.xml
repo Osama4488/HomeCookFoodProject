@@ -149,15 +149,15 @@
                 android:layout_centerHorizontal="true"
                 android:text="Choose Image"
                 />
-<!--            <Button-->
-<!--                android:id="@+id/button_upload"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_alignParentBottom="true"-->
-<!--                android:layout_centerHorizontal="true"-->
-<!--                android:layout_alignParentRight="true"-->
-<!--                android:text="Upload Image"-->
-<!--                android:enabled="false"/>-->
+            <Button
+                android:id="@+id/button_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentRight="true"
+                android:text="Set Time"
+                />
         </RelativeLayout>
     <Button
 

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfirebasejavaproject.R;
+import com.example.myfirebasejavaproject.models.FeaturedHelperClass;
 
 import java.util.ArrayList;
 

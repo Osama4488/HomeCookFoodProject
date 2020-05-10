@@ -13,21 +13,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeCooker.Home_cooker_DashBoard">
-
-        </activity>
-        <activity android:name=".common.uploadRetrieveImages"></activity>
+        <activity android:name=".user.Menu_Profile"></activity>
+        <activity
+            android:name=".tabs.HomeCookerProfileTab"
+            android:label="@string/title_activity_home_cooker_profile_tab"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".HomeCooker.Home_cooker_profile" />
+        <activity android:name=".HomeCooker.SetTimingsCookerProfile"></activity>
+        <activity android:name=".HomeCooker.Home_cooker_DashBoard" />
+        <activity android:name=".common.uploadRetrieveImages" />
         <activity android:name=".common.practiceDetailActivity" />
-        <activity android:name=".common.retrieveDataPractice"></activity>
-        <activity android:name=".user.UserDashboard">
-
-        </activity>
+        <activity android:name=".common.retrieveDataPractice" />
+        <activity android:name=".user.UserDashboard" />
         <activity android:name=".common.OnBoarding" />
         <activity android:name=".app.SignInWithGoogle" />
         <activity android:name=".app.Verify_phone_page" />
         <activity android:name=".app.Userprofile" />
         <activity android:name=".app.LoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,7 +38,7 @@
         </activity>
         <activity android:name=".app.DashboardActivity" />
         <activity android:name=".common.SplashActivity" />
-        <activity android:name=".tabs.SignUpTabs"></activity>
+        <activity android:name=".tabs.SignUpTabs" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -1,7 +1,7 @@
 package com.example.myfirebasejavaproject.models;
 
 public class UserHelperClass {
-    String name,username,email,phoneNo,password,address,type,mImageUrl;
+    String name,username,email,phoneNo,password,address,type,mImageUrl,cookerId;
    public static boolean whichUser = false;
    public static String shared = "HomeCookerDetails";
 
@@ -10,6 +10,8 @@ public class UserHelperClass {
     public UserHelperClass() {
 
     }
+
+
 
 
     public UserHelperClass(String name, String username, String email, String phoneNo, String password, String address,String type) {
@@ -31,6 +33,15 @@ public class UserHelperClass {
         this.password = password;
         this.type = type;
         this.mImageUrl = image;
+    }
+
+
+    public String getCookerId() {
+        return cookerId;
+    }
+
+    public void setCookerId(String cookerId) {
+        this.cookerId = cookerId;
     }
 
     public String getmImageUrl() {

@@ -1,5 +1,8 @@
 package com.example.myfirebasejavaproject.adapters.HomeAdapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,10 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfirebasejavaproject.models.UserHelperClass;
 import com.example.myfirebasejavaproject.R;
+import com.example.myfirebasejavaproject.user.Menu_Profile;
 import com.squareup.picasso.Picasso;
 
 
@@ -20,9 +25,12 @@ public class FeaturedAdapter  extends RecyclerView.Adapter<FeaturedAdapter.Featu
 
 
     List<UserHelperClass> featuredLocations;
+    String uid;
+    Context mContext;
 
-    public FeaturedAdapter(List<UserHelperClass> featuredLocations) {
+    public FeaturedAdapter(List<UserHelperClass> featuredLocations,Context context) {
         this.featuredLocations = featuredLocations;
+        mContext = context;
     }
 
     @NonNull
@@ -35,13 +43,33 @@ public class FeaturedAdapter  extends RecyclerView.Adapter<FeaturedAdapter.Featu
 
     @Override
     public void onBindViewHolder(@NonNull FeaturedViewHolder holder, int position) {
-        UserHelperClass featuredHelperClass = featuredLocations.get(position);
+        final UserHelperClass featuredHelperClass = featuredLocations.get(position);
+//        FeaturedHelperClass model = featuredLocations.get(position);
+        uid = featuredHelperClass.getCookerId();
+
+
+
+
        // holder.image.setImageResource(featuredHelperClass.getImage());
         holder.title.setText(featuredHelperClass.getName());
         Picasso.get().load(featuredHelperClass.getmImageUrl())
                 .fit()
                 .centerCrop()
                 .into(holder.image);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uid = featuredHelperClass.getCookerId();
+
+            String  name = featuredHelperClass.getName();
+                SharedPreferences.Editor editor = mContext.getSharedPreferences("clickedProfile",Context.MODE_PRIVATE).edit();
+                editor.putString("uid",uid);
+                editor.putString("imageurl",featuredHelperClass.getmImageUrl());
+                editor.commit();
+                mContext.startActivity(new Intent(mContext, Menu_Profile.class));
+            }
+        });
+
 
 
         // FeaturedHelperClass featuredHelperClass = featuredLocations.get(position);
@@ -60,6 +88,7 @@ public class FeaturedAdapter  extends RecyclerView.Adapter<FeaturedAdapter.Featu
 
         ImageView image;
         TextView title,desc;
+        CardView cardView;
 
         public FeaturedViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,6 +96,7 @@ public class FeaturedAdapter  extends RecyclerView.Adapter<FeaturedAdapter.Featu
             image = itemView.findViewById(R.id.featured_image);
             title = itemView.findViewById(R.id.featured_title);
             desc = itemView.findViewById(R.id.featured_desc);
+            cardView = itemView.findViewById(R.id.card_viewFeatured);
         }
     }
 

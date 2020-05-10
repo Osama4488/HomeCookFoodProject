@@ -1,50 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeCooker.Home_cooker_DashBoard"
     android:background="@color/light_white"
+    android:id="@+id/drawer_layout2"
     >
 
-    <include
-        android:id="@+id/homecook_toolbar"
-        layout="@layout/home_cooker_toolbar"/>
 
-
-
-
-    <ScrollView
-        android:layout_below="@id/homecook_toolbar"
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view2"
+        android:theme="@style/navigationTheme"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/light_white"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/menu_header"
+        app:menu="@menu/menu_forapp"/>
+
     <RelativeLayout
-        android:layout_below="@+id/dashboard"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/home_cooker_toolbar"
+            android:id="@+id/toolbar">
+
+        </include>
+
+        <ScrollView
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_below="@+id/dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/main_food_recycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@layout/main_food_card_design"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/main_food_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                   />
+
+            </RelativeLayout>
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addMainFood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="30dp"
+            app:rippleColor="@color/colorPrimary"
+            android:theme="@style/floatingActionButton"
+            android:backgroundTint="@color/colorPrimary"
+            android:src="@drawable/add_icon"/>
 
     </RelativeLayout>
-    </ScrollView>
 
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addMainFood"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="30dp"
-        app:rippleColor="@color/colorPrimary"
-        android:theme="@style/floatingActionButton"
-        android:backgroundTint="@color/colorPrimary"
-        android:src="@drawable/add_icon"/>
 
-</RelativeLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

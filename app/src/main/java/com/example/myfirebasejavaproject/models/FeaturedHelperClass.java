@@ -1,14 +1,22 @@
-package com.example.myfirebasejavaproject.adapters.HomeAdapter;
+package com.example.myfirebasejavaproject.models;
 
 public class FeaturedHelperClass {
 
-    int image;
+    int image,cookerId;
     String title,description;
 
     public FeaturedHelperClass(int image, String title, String description) {
         this.image = image;
         this.title = title;
         this.description = description;
+    }
+
+    public int getCookerId() {
+        return cookerId;
+    }
+
+    public void setCookerId(int cookerId) {
+        this.cookerId = cookerId;
     }
 
     public int getImage() {
