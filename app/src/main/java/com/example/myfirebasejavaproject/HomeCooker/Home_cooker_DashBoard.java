@@ -156,6 +156,7 @@ public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAd
                 mDatalist.add(model);
                 //mAdapter.notifyItemInserted(count);
                 mAdapter.notifyDataSetChanged();
+
                 //}
 
             }
@@ -322,6 +323,7 @@ public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAd
         String link = _KEY + "/MainFood/" + mainFoodid + "/name";
         updatedValue.put(link, FoodName);
         ref1.updateChildren(updatedValue);
+        Toast.makeText(this, "Value Updated", Toast.LENGTH_SHORT).show();
         //setMainFoodRecycler();
         //setRecyclerView();
 
