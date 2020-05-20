@@ -35,4 +35,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    //Elegant Button
+    implementation 'com.cepheuen.elegant-number-button:lib:1.0.2'
+    //ExpandableLayout
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
+    implementation 'com.thoughtbot:expandablerecyclerview:1.3'
 }

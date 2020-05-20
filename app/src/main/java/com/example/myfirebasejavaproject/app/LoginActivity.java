@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     private final static int RC_SIGN_IN = 123;
     private FirebaseAuth mAuth;
     SharedPreferences onBoardgingScreen;
-boolean check = false;
+    boolean check = false;
 
     @Override
     protected void onStart() {
@@ -64,21 +64,57 @@ boolean check = false;
         SharedPreferences editor = getSharedPreferences(UserHelperClass.shared, MODE_PRIVATE);
         String exist = editor.getString("username", "");
         String type = editor.getString("type", "");
-        if(!exist.equals("")  && type.equals("User")  ){
+        String id = editor.getString("homeCookerId", "");
+        if (!exist.equals("") && type.equals("User")) {
+
             Intent intent = new Intent(getApplicationContext(), UserDashboard.class);// Onboarding Activity pe
             startActivity(intent);
             finish();
-        }
-        else if(!exist.equals("")  && type.equals("Homecooker")){
+        } else if (!exist.equals("") && type.equals("Homecooker")) {
+            getHomeCookerUpdatedData(id);
             Intent intent = new Intent(getApplicationContext(), Home_cooker_DashBoard.class);// Onboarding Activity pe
             startActivity(intent);
             finish();
-        }
-        else {
+        } else {
 
         }
 
     }
+
+    private void getHomeCookerUpdatedData(String id) {
+        DatabaseReference reference = UserHelperClass.path;
+        isUser();
+//        reference.child(id);
+//        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                for (DataSnapshot data : dataSnapshot.getChildren()){
+//                    String nameFromDb = data.child(homeCookerId).child("name").getValue(String.class);
+//                    String usernameFromDb = data.child(homeCookerId).child("username").getValue(String.class);
+//                    String phonenoFromDb = dataSnapshot.child(homeCookerId).child("phoneNo").getValue(String.class);
+//                    String emailFromDb = dataSnapshot.child(homeCookerId).child("email").getValue(String.class);
+//                    String mImageUri = dataSnapshot.child(homeCookerId).child("mImageUrl").getValue(String.class);
+//                    String typeFromDb = dataSnapshot.child(homeCookerId).child("type").getValue(String.class);
+//                    SharedPreferences.Editor editor = getSharedPreferences(UserHelperClass.shared, MODE_PRIVATE).edit();
+//                    editor.putString("name", nameFromDb);
+//                    editor.putString("username", usernameFromDb);
+//                    editor.putString("phoneno", phonenoFromDb);
+//                    editor.putString("password", passwordFromDB);
+//                    editor.putString("email", emailFromDb);
+//                    editor.putString("imageurl",mImageUri);
+//                    editor.putString("homeCookerId",homeCookerId);
+//                    editor.putString("type",typeFromDb);
+//                    editor.commit();
+//                }
+    }
+
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -306,6 +342,7 @@ boolean check = false;
                                                                 String emailFromDb = dataSnapshot.child(homeCookerId).child("email").getValue(String.class);
                                                                 String mImageUri = dataSnapshot.child(homeCookerId).child("mImageUrl").getValue(String.class);
                                                                 String typeFromDb = dataSnapshot.child(homeCookerId).child("type").getValue(String.class);
+                                                                String address = dataSnapshot.child(homeCookerId).child("address").getValue(String.class);
                                                                 SharedPreferences.Editor editor = getSharedPreferences(UserHelperClass.shared, MODE_PRIVATE).edit();
                                                                 editor.putString("name", nameFromDb);
                                                                 editor.putString("username", usernameFromDb);
@@ -315,6 +352,7 @@ boolean check = false;
                                                                 editor.putString("imageurl",mImageUri);
                                                                 editor.putString("homeCookerId",homeCookerId);
                                                                 editor.putString("type",typeFromDb);
+                                                                editor.putString("address",address);
                                                                 editor.commit();
                                                                 UserHelperClass.whichUser = true;
 //

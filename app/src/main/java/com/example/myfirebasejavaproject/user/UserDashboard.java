@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.myfirebasejavaproject.app.LoginActivity;
+import com.example.myfirebasejavaproject.app.Userprofile;
 import com.example.myfirebasejavaproject.models.UserHelperClass;
 import com.example.myfirebasejavaproject.R;
 import com.example.myfirebasejavaproject.adapters.HomeAdapter.FeaturedAdapter;
@@ -149,6 +150,9 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
                 SharedPreferences pref = getSharedPreferences(UserHelperClass.shared,MODE_PRIVATE);
                 pref.edit().clear().commit();
                 finish();
+                break;
+            case R.id.nav_profile:
+                startActivity(new Intent(UserDashboard.this, Userprofile.class));
                 break;
 
                 default:

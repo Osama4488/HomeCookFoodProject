@@ -21,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.security.MessageDigest;
+
 public class AsUser extends Fragment {
 
 
@@ -77,6 +79,7 @@ public class AsUser extends Fragment {
                     String email = regEmail.getEditText().getText().toString();
                     String phonenum = regPhoneNo.getEditText().getText().toString();
                     String password = regPassword.getEditText().getText().toString();
+//                    String newPass =  sha256(password);
                     String address =regAddress.getEditText().getText().toString();
                     String type = "User";
 
@@ -105,6 +108,23 @@ public class AsUser extends Fragment {
 
         return view;
     }
+//    public static String sha256(String base) {
+//        try{
+//            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+//            byte[] hash = digest.digest(base.getBytes("UTF-8"));
+//            StringBuffer hexString = new StringBuffer();
+//
+//            for (int i = 0; i < hash.length; i++) {
+//                String hex = Integer.toHexString(0xff & hash[i]);
+//                if(hex.length() == 1) hexString.append('0');
+//                hexString.append(hex);
+//            }
+//
+//            return hexString.toString();
+//        } catch(Exception ex){
+//            throw new RuntimeException(ex);
+//        }
+//    }
 
 
     private void checkEmailAlreadyRxists(){
