@@ -50,7 +50,7 @@ public class FeaturedAdapter  extends RecyclerView.Adapter<FeaturedAdapter.Featu
 
 
 
-       // holder.image.setImageResource(featuredHelperClass.getImage());
+        // holder.image.setImageResource(featuredHelperClass.getImage());
         holder.title.setText(featuredHelperClass.getName());
         Picasso.get().load(featuredHelperClass.getmImageUrl())
                 .fit()
@@ -61,7 +61,7 @@ public class FeaturedAdapter  extends RecyclerView.Adapter<FeaturedAdapter.Featu
             public void onClick(View v) {
                 uid = featuredHelperClass.getCookerId();
 
-            String  name = featuredHelperClass.getName();
+                String  name = featuredHelperClass.getName();
                 SharedPreferences.Editor editor = mContext.getSharedPreferences("clickedProfile",Context.MODE_PRIVATE).edit();
                 editor.putString("uid",uid);
                 editor.putString("imageurl",featuredHelperClass.getmImageUrl());

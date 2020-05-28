@@ -373,6 +373,8 @@ public class Home_cooker_DashBoard extends AppCompatActivity implements DialogAd
                 pref.edit().clear().commit();
                 finish();
                 break;
+            case R.id.nav_bookings:
+                startActivity(new Intent(Home_cooker_DashBoard.this, HomeCookerAppointments.class));
             default:
                 return true;
         }

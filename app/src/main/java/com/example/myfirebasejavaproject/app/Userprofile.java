@@ -133,6 +133,12 @@ public class Userprofile extends AppCompatActivity {
             refrence.child("phoneNo").setValue(phone);
             refrence.child("password").setValue(pass);
 
+            //
+
+            fullNameLabel.setText(name);
+            usernameLabel.setText(name);
+
+            //
             updateSharedrefrence();
             Toast.makeText(Userprofile.this, "Data Updated Sucessfully", Toast.LENGTH_SHORT).show();
         }

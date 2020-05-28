@@ -1,13 +1,16 @@
 package com.example.myfirebasejavaproject.user;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.myfirebasejavaproject.adapters.HomeAdapter.GridAdapter;
+import com.example.myfirebasejavaproject.adapters.HomeAdapter.NearByAdapter;
 import com.example.myfirebasejavaproject.app.LoginActivity;
 import com.example.myfirebasejavaproject.app.Userprofile;
 import com.example.myfirebasejavaproject.models.UserHelperClass;
@@ -40,22 +45,28 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
     //Variables
     static final float END_SCALE = 0.7f;
     RecyclerView featuredRecycler;
-    RecyclerView mostviewedRecycler;
+    RecyclerView mostviewedRecycler,nearByRecyclerView,gridRecyclerView;
     RecyclerView.Adapter adapter;
     private FeaturedAdapter mAdapter;
-
+    private MostViewedAdapter mostViewedAdapter;
+    private NearByAdapter nearByAdapter;
+    private GridAdapter gridAdapter;
     private DatabaseReference refrence;
     private List<UserHelperClass> mDatalist;
+    private List<UserHelperClass> mostViewdDataList;
+    private List<UserHelperClass> NearBydDataList;
+    private List<UserHelperClass> gridDataList;
     private static SharedPreferences mPrefs;
     private static final String PREFS_TAG = "SharedPrefs";
     private static final String PRODUCT_TAG = "MyProduct";
     Context mContext;
     LinearLayout contentView;
-
+    private ArrayList<Object> objects = new ArrayList<>();
     // Drawer Menu
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ImageView menuIcon;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,11 +76,20 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 
         //Hooks
         featuredRecycler = findViewById(R.id.featured_recycler);
-        mostviewedRecycler = findViewById(R.id.mostviewed_recycler);
+        mostviewedRecycler = findViewById(R.id.mostviewed_recyclerr);
+        nearByRecyclerView = findViewById(R.id.nearByRecyclerr);
+
+      // gridRecyclerView = findViewById(R.id.gridRecycler);
         menuIcon = findViewById(R.id.menu_icon);
         contentView = findViewById(R.id.content);
         featuredRecycler();
         mostViewedRecycler();
+        nearByRecycler();
+       // gridRecycler();
+
+
+
+
 
 
         //Menu Hooks
@@ -80,8 +100,6 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
         navigationDrawer();
 
     }
-
-
 
     //Navigation Drawer Functions
     private void navigationDrawer() {
@@ -136,7 +154,18 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
             drawerLayout.closeDrawer(GravityCompat.START);
         }
         else {
-            super.onBackPressed();
+            AlertDialog dialog = new AlertDialog.Builder(UserDashboard.this)
+                    .setTitle("")
+                    .setMessage("You sure you want to exit application")
+
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    }).setNegativeButton("Cancel",null)
+                    .show();
+           // super.onBackPressed();
         }
 
 
@@ -167,6 +196,10 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 
     private void featuredRecycler() {
 
+//        mostviewedRecycler.setHasFixedSize(true);
+//        mostviewedRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+
+
         featuredRecycler.setHasFixedSize(true);
         featuredRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mDatalist = new ArrayList<>();
@@ -190,6 +223,9 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
                 }
                 mAdapter = new FeaturedAdapter(mDatalist,UserDashboard.this);
                 featuredRecycler.setAdapter(mAdapter);
+
+//                mostViewedAdapter = new MostViewedAdapter(mDatalist,UserDashboard.this);
+//                mostviewedRecycler.setAdapter(mostViewedAdapter);
             }
 
             @Override
@@ -219,6 +255,8 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 
 
     }
+
+
 
 
 //    private void featuredRecycler() {
@@ -277,15 +315,136 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 
     private void mostViewedRecycler() {
         //mostviewedRecycler.setHasFixedSize(true);
+//        mostviewedRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//
+//        ArrayList<FeaturedHelperClass> mostViewedLocation = new ArrayList<>();
+//        mostViewedLocation.add(new FeaturedHelperClass(R.drawable.mcdoland, "Mcdonalds", "asdbkj akjdsnk bands njads nasd"));
+//        mostViewedLocation.add(new FeaturedHelperClass(R.drawable.add_icon, "Pitbull", "asdbkj akjdsnk bands njads nasd"));
+//        mostViewedLocation.add(new FeaturedHelperClass(R.drawable.restaurant_image, "Delicious", "asdbkj akjdsnk bands njads nasd"));
+//
+//        adapter = new MostViewedAdapter(mostViewedLocation);
+//        mostviewedRecycler.setAdapter(adapter);
+
+        mostviewedRecycler.setHasFixedSize(true);
         mostviewedRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mostViewdDataList = new ArrayList<>();
 
-        ArrayList<FeaturedHelperClass> mostViewedLocation = new ArrayList<>();
-        mostViewedLocation.add(new FeaturedHelperClass(R.drawable.mcdoland, "Mcdonalds", "asdbkj akjdsnk bands njads nasd"));
-        mostViewedLocation.add(new FeaturedHelperClass(R.drawable.add_icon, "Pitbull", "asdbkj akjdsnk bands njads nasd"));
-        mostViewedLocation.add(new FeaturedHelperClass(R.drawable.restaurant_image, "Delicious", "asdbkj akjdsnk bands njads nasd"));
+        refrence = FirebaseDatabase.getInstance().getReference("HomeCooker");
 
-        adapter = new MostViewedAdapter(mostViewedLocation);
-        mostviewedRecycler.setAdapter(adapter);
+        refrence.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                    UserHelperClass model = postSnapshot.getValue(UserHelperClass.class);
+                    // FeaturedHelperClass model1 = postSnapshot.getValue(FeaturedHelperClass.class);
+                    if(model.getType().equals("User")){
+
+                    }
+                    else {
+
+                        model.setCookerId(postSnapshot.getKey());
+                        mostViewdDataList.add(model);
+//                        if(mostViewdDataList.size() == 1){
+//                           mostViewdDataList.remove(0);
+//                        }
+                        if(mostViewdDataList.size() == 3){
+                            mostViewdDataList.remove(0);
+                            break;
+                        }
+                    }
+
+                }
+                mostViewedAdapter = new MostViewedAdapter(mostViewdDataList,UserDashboard.this);
+                mostviewedRecycler.setAdapter(mostViewedAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(mContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+//
+    }
+
+    private void nearByRecycler(){
+        nearByRecyclerView.setHasFixedSize(true);
+        nearByRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        NearBydDataList = new ArrayList<>();
+
+        refrence = FirebaseDatabase.getInstance().getReference("HomeCooker");
+
+        refrence.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                    UserHelperClass model = postSnapshot.getValue(UserHelperClass.class);
+                    // FeaturedHelperClass model1 = postSnapshot.getValue(FeaturedHelperClass.class);
+                    if(model.getType().equals("User")){
+
+                    }
+                    else {
+
+                        model.setCookerId(postSnapshot.getKey());
+                        NearBydDataList.add(model);
+
+
+
+
+                    }
+
+                }
+                NearBydDataList.remove(1);
+                NearBydDataList.remove(0);
+                nearByAdapter = new NearByAdapter(NearBydDataList,UserDashboard.this);
+                nearByRecyclerView.setAdapter(nearByAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(mContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void gridRecycler(){
+        gridRecyclerView.setHasFixedSize(true);
+        gridRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
+        gridDataList = new ArrayList<>();
+        refrence = FirebaseDatabase.getInstance().getReference("HomeCooker");
+
+        refrence.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+
+                    UserHelperClass model = postSnapshot.getValue(UserHelperClass.class);
+                    // FeaturedHelperClass model1 = postSnapshot.getValue(FeaturedHelperClass.class);
+                    if(model.getType().equals("User")){
+
+                    }
+                    else {
+                        model.setCookerId(postSnapshot.getKey());
+                        gridDataList.add(model);
+                    }
+
+                }
+                gridAdapter = new GridAdapter(gridDataList,UserDashboard.this);
+                gridRecyclerView.setAdapter(gridAdapter);
+
+//                mostViewedAdapter = new MostViewedAdapter(mDatalist,UserDashboard.this);
+//                mostviewedRecycler.setAdapter(mostViewedAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(mContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 

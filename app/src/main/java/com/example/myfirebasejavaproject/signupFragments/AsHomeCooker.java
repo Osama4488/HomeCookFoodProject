@@ -134,7 +134,7 @@ public class AsHomeCooker extends Fragment {
 
 
 //                                            Toast.makeText(getActivity().getApplicationContext(), "Upload successful", Toast.LENGTH_LONG).show();
-                                            Toast.makeText(getActivity().getApplicationContext(), "Sign Up Sucessfully", Toast.LENGTH_LONG).show();
+
 //
                                             mImageurl = taskSnapshot.getUploadSessionUri().toString();
                                             UserHelperClass helperClass = new UserHelperClass(name, username, email, phonenum, password, address, type, downloadUrl.toString());
@@ -172,7 +172,7 @@ public class AsHomeCooker extends Fragment {
 //                    Snackbar snackbar = Snackbar
 //                            .make(view, "Sign up sucessfull", Snackbar.LENGTH_LONG);
 //                    snackbar.show();
-
+                    Toast.makeText(getActivity().getApplicationContext(), "Sign Up Sucessfully", Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
 

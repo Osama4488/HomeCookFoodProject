@@ -3,11 +3,15 @@ package com.example.myfirebasejavaproject.models;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserHelperClass {
     String name,username,email,phoneNo,password,address,type,mImageUrl,cookerId;
    public static boolean whichUser = false;
    public static String shared = "HomeCookerDetails";
    public static DatabaseReference path = FirebaseDatabase.getInstance().getReference("HomeCooker");
+   public static List<String> idds = new ArrayList<>();
 
 
 

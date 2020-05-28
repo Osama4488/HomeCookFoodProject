@@ -13,18 +13,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeCooker.HomeCookerAppointments">
+        <activity android:name=".Main2Activity">
 
         </activity>
-        <activity android:name=".user.CartActivity">
+        <activity android:name=".HomeCooker.HomeCookerAppointments">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".user.CartActivity">
+
+        </activity>
         <activity android:name=".HomeCooker.Hom_cooker_sub_food_Activity" />
-        <activity android:name=".user.Menu_Profile" />
+        <activity android:name=".user.Menu_Profile"></activity>
         <activity
             android:name=".tabs.HomeCookerProfileTab"
             android:label="@string/title_activity_home_cooker_profile_tab"
@@ -34,7 +37,7 @@
         <activity android:name=".common.uploadRetrieveImages" />
         <activity android:name=".common.practiceDetailActivity" />
         <activity android:name=".common.retrieveDataPractice" />
-        <activity android:name=".user.UserDashboard" />
+        <activity android:name=".user.UserDashboard"></activity>
         <activity android:name=".common.OnBoarding" />
         <activity android:name=".app.SignInWithGoogle" />
         <activity android:name=".app.Verify_phone_page" />
