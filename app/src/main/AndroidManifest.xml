@@ -13,41 +13,45 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Main2Activity">
+        <activity android:name=".ExtraWork.Main2Activity">
 
         </activity>
-        <activity android:name=".HomeCooker.HomeCookerAppointments">
+        <activity android:name=".ActivitiesNew.HomeCooker.HomeCookerBookings">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".user.CartActivity">
+        <activity android:name=".ActivitiesNew.User.CartActivity">
 
         </activity>
-        <activity android:name=".HomeCooker.Hom_cooker_sub_food_Activity" />
-        <activity android:name=".user.Menu_Profile"></activity>
+        <activity android:name=".ActivitiesNew.HomeCooker.Hom_cooker_sub_food_Activity" />
+        <activity android:name=".ActivitiesNew.User.Menu_Profile"></activity>
         <activity
-            android:name=".tabs.HomeCookerProfileTab"
+            android:name=".ActivitiesNew.HomeCooker.HomeCookerProfileTab"
             android:label="@string/title_activity_home_cooker_profile_tab"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".HomeCooker.SetTimingsCookerProfile" />
-        <activity android:name=".HomeCooker.Home_cooker_DashBoard" />
-        <activity android:name=".common.uploadRetrieveImages" />
-        <activity android:name=".common.practiceDetailActivity" />
-        <activity android:name=".common.retrieveDataPractice" />
-        <activity android:name=".user.UserDashboard"></activity>
-        <activity android:name=".common.OnBoarding" />
-        <activity android:name=".app.SignInWithGoogle" />
-        <activity android:name=".app.Verify_phone_page" />
-        <activity android:name=".app.Userprofile" />
-        <activity android:name=".app.LoginActivity">
+            android:theme="@style/AppTheme.NoActionBar" >
 
         </activity>
-        <activity android:name=".app.DashboardActivity" />
-        <activity android:name=".common.SplashActivity" />
-        <activity android:name=".tabs.SignUpTabs" />
+        <activity android:name=".ActivitiesNew.HomeCooker.SetTimingsCookerProfile" />
+        <activity android:name=".ActivitiesNew.HomeCooker.Home_cooker_DashBoard" />
+<!--        <activity android:name=".ExtraWork.common.uploadRetrieveImages" />-->
+<!--        <activity android:name=".ExtraWork.common.practiceDetailActivity" />-->
+<!--        <activity android:name=".ExtraWork.common.retrieveDataPractice" />-->
+        <activity android:name=".ActivitiesNew.User.UserDashboard"></activity>
+        <activity android:name=".ActivitiesNew.HomeCooker.OnBoarding" />
+        <activity android:name=".ActivitiesNew.Common.SignInWithGoogle" />
+        <activity android:name=".ActivitiesNew.Common.Verify_phone_page" />
+        <activity android:name=".ActivitiesNew.User.Userprofile" />
+        <activity android:name=".ActivitiesNew.Common.LoginActivity">
+
+        </activity>
+        <activity android:name=".ExtraWork.DashboardActivity" />
+        <activity android:name=".ActivitiesNew.Common.SplashActivity" >
+
+        </activity>
+        <activity android:name=".ActivitiesNew.Common.SignUpTabs" />
 
         <meta-data
             android:name="preloaded_fonts"
