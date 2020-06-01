@@ -25,8 +25,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -39,15 +42,16 @@ public class SignUpAsHomeCooker extends Fragment {
 
     private static final int PICK_IMAGE_REQUEST = 1;
     String mImageurl;
-    private Button mButtonChooseImage,setTime;
-    TextInputLayout regName,regUsername,regEmail,regPhoneNo,regPassword,regAdress;
-    Button regBtn,regToLoginbtn;
-    public static  int check = 1;
+    private Button mButtonChooseImage, setTime;
+    TextInputLayout regName, regUsername, regEmail, regPhoneNo, regPassword, regAdress;
+    Button regBtn, regToLoginbtn;
+    public static int check = 0;
     FirebaseAuth mAuth;
     FirebaseDatabase rootNode;
     DatabaseReference refrence;
     private StorageReference mStorageRef;
     private ProgressBar mProgressBar;
+    String val;
 
     private Uri mImageUri;
     private StorageTask mUploadTask;
@@ -55,7 +59,7 @@ public class SignUpAsHomeCooker extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.signuphomecooker,container,false);
+        final View view = inflater.inflate(R.layout.signuphomecooker, container, false);
 
 
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads");
@@ -90,17 +94,18 @@ public class SignUpAsHomeCooker extends Fragment {
 
 
                 registerUser();
-                if(check == 2) {
+                if (check == 2) {
                     rootNode = FirebaseDatabase.getInstance();
                     refrence = rootNode.getReference("HomeCooker");
 
-                   final String name = regName.getEditText().getText().toString();
+                    final String name = regName.getEditText().getText().toString();
                     final String username = regUsername.getEditText().getText().toString();
                     final String email = regEmail.getEditText().getText().toString();
                     final String phonenum = regPhoneNo.getEditText().getText().toString();
                     final String password = regPassword.getEditText().getText().toString();
                     final String address = regAdress.getEditText().getText().toString();
                     final String type = "Homecooker";
+
 
                     if (mUploadTask != null && mUploadTask.isInProgress()) {
                         Toast.makeText(getActivity().getApplicationContext(), "Upload is in progress", Toast.LENGTH_SHORT).show();
@@ -122,8 +127,8 @@ public class SignUpAsHomeCooker extends Fragment {
 //                                            }
 //                                        }, 500);
                                             Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
-                                            while (!urlTask.isSuccessful());
-                                            Uri downloadUrl = urlTask.getResult();
+                                            while (!urlTask.isSuccessful()) ;
+                                            final Uri downloadUrl = urlTask.getResult();
 
                                             //Log.d(TAG, "onSuccess: firebase download url: " + downloadUrl.toString()); //use if testing...don't need this line.
 //                                            UserHelperClass upload = new UserHelperClass(mEditTextFileName.getText().toString().trim(),downloadUrl.toString());
@@ -132,14 +137,50 @@ public class SignUpAsHomeCooker extends Fragment {
 //                                            mDatabaseRef.child(uploadId).setValue(upload);
 
 
-
 //                                            Toast.makeText(getActivity().getApplicationContext(), "Upload successful", Toast.LENGTH_LONG).show();
 
 //
                                             mImageurl = taskSnapshot.getUploadSessionUri().toString();
-                                            UserHelperClass helperClass = new UserHelperClass(name, username, email, phonenum, password, address, type, downloadUrl.toString());
-                                            refrence.push().setValue(helperClass);
-                                            getActivity().finish();
+
+                                            refrence = UserHelperClass.path;
+                                            refrence.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                                        String us = data.child("username").getValue().toString();
+                                                        if (us.equals(val)) {
+                                                           // Toast.makeText(getActivity().getApplicationContext(), "User Already Exists", Toast.LENGTH_SHORT).show();
+                                                            regUsername.setError("Username already exists");
+                                                            check = 0;
+                                                            return;
+                                                        } else {
+                                                            check = 2;
+                                                        }
+
+
+                                                    }
+                                                    check = 2;
+                                                    UserHelperClass helperClass = new UserHelperClass(name, username, email, phonenum, password, address, type, downloadUrl.toString());
+                                                    refrence.push().setValue(helperClass);
+                                                    getActivity().finish();
+                                                    Toast.makeText(getActivity().getApplicationContext(), "Sign Up Sucessfully", Toast.LENGTH_LONG).show();
+                                                    Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+                                                    startActivity(intent);
+
+
+                                                }
+
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                }
+                                            });
+
+
+//                                            UserHelperClass helperClass = new UserHelperClass(name, username, email, phonenum, password, address, type, downloadUrl.toString());
+//                                            refrence.push().setValue(helperClass);
+//                                            getActivity().finish();
 
                                         }
                                     })
@@ -157,7 +198,8 @@ public class SignUpAsHomeCooker extends Fragment {
 //                                        }
 //                                    });
                         } else {
-                            Toast.makeText(getActivity().getApplicationContext(), "No file selected", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity().getApplicationContext(), "Please select Image to continue", Toast.LENGTH_LONG).show();
+                            return;
                         }
                     }
 
@@ -168,13 +210,14 @@ public class SignUpAsHomeCooker extends Fragment {
 //                    startActivity(intent);
 
 
-
 //                    Snackbar snackbar = Snackbar
 //                            .make(view, "Sign up sucessfull", Snackbar.LENGTH_LONG);
 //                    snackbar.show();
-                    Toast.makeText(getActivity().getApplicationContext(), "Sign Up Sucessfully", Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
+
+
+//                    Toast.makeText(getActivity().getApplicationContext(), "Sign Up Sucessfully", Toast.LENGTH_LONG).show();
+//                    Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+//                    startActivity(intent);
 
 
                 }
@@ -185,11 +228,12 @@ public class SignUpAsHomeCooker extends Fragment {
         return view;
     }
 
-private void setTimeFunction(){
+
+    private void setTimeFunction() {
         Intent intent = new Intent(getActivity().getApplicationContext(), SetTimingsCookerProfile.class);
         startActivity(intent);
 
-}
+    }
 
     private void openFileChooser() {
         Intent intent = new Intent();
@@ -211,7 +255,7 @@ private void setTimeFunction(){
     }
 
     private String getFileExtension(Uri uri) {
-       ContentResolver cR = getActivity().getContentResolver();
+        ContentResolver cR = getActivity().getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
@@ -260,14 +304,13 @@ private void setTimeFunction(){
 //    }
 
 
-
-////////////////////////////////////
-    private Boolean validateName(){
+    ////////////////////////////////////
+    private Boolean validateName() {
         String val = regName.getEditText().getText().toString();
-        if(val.isEmpty()){
+        if (val.isEmpty()) {
             regName.setError("Field cannot be empty");
             return false;
-        }else {
+        } else {
             regName.setError(null);
             regName.setErrorEnabled(false);
             return true;
@@ -275,14 +318,14 @@ private void setTimeFunction(){
 
 
     }
-    private Boolean validateUsername(){
-        String val = regUsername.getEditText().getText().toString();
+
+    private Boolean validateUsername() {
+        val = regUsername.getEditText().getText().toString();
         //String noWhiteSpace = "(?=\\s+$)";
-        if(val.isEmpty()){
+        if (val.isEmpty()) {
             regUsername.setError("Field cannot be empty");
             return false;
-        }
-        else if(val.length() >=15){
+        } else if (val.length() >= 15) {
             regUsername.setError("Username too long");
             return false;
         }
@@ -298,22 +341,20 @@ private void setTimeFunction(){
 
 
     }
-    private Boolean validateEmail(){
 
+    private Boolean validateEmail() {
 
 
         String val = regEmail.getEditText().getText().toString();
         String emailPattern = "[a-zA-z0-9._-]+@[a-z]+\\.+[a-z]+";
 
-        if(val.isEmpty()){
+        if (val.isEmpty()) {
             regEmail.setError("Field cannot be empty");
             return false;
-        }
-        else if(!val.matches(emailPattern)){
+        } else if (!val.matches(emailPattern)) {
             regEmail.setError("Invalid Email address");
             return false;
-        }
-        else {
+        } else {
             regName.setError(null);
             regEmail.setErrorEnabled(false);
             return true;
@@ -321,12 +362,13 @@ private void setTimeFunction(){
 
 
     }
-    private Boolean validatePhoneNo(){
+
+    private Boolean validatePhoneNo() {
         String val = regPhoneNo.getEditText().getText().toString();
-        if(val.isEmpty()){
+        if (val.isEmpty()) {
             regPhoneNo.setError("Field cannot be empty");
             return false;
-        }else {
+        } else {
             regPhoneNo.setError(null);
             regPhoneNo.setErrorEnabled(false);
             return true;
@@ -334,7 +376,8 @@ private void setTimeFunction(){
 
 
     }
-    private Boolean validatePassword(){
+
+    private Boolean validatePassword() {
         String val = regPassword.getEditText().getText().toString();
         String passwordVal = "^" +
                 //"(?=.*[0-9])" +         //at least 1 digit
@@ -345,26 +388,26 @@ private void setTimeFunction(){
                 "(?=\\S+$)" +           //no white spaces
                 ".{4,}" +               //at least 4 characters
                 "$";
-        if(val.isEmpty()){
+        if (val.isEmpty()) {
             regPassword.setError("Field cannot be empty");
             return false;
-        }
-        else if(!val.matches(passwordVal)){
+        } else if (!val.matches(passwordVal)) {
             regPassword.setError("Password is too weak");
             return false;
-        }
-        else {
+        } else {
             regName.setError(null);
             regPassword.setErrorEnabled(false);
             return true;
         }
     }
+
     public void registerUser() {
-        if(!validateName() |!validatePassword() | !validatePhoneNo() | !validateEmail() | !validateUsername())
-        {   check =1;
-            return ;
+        if (!validateName() | !validatePassword() | !validatePhoneNo() | !validateEmail() | !validateUsername()) {
+            check = 1;
+            return;
         }
-        check =2;
+        check = 2;
+
 
     }
 
