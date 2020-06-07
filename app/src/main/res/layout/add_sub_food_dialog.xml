@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical"
+    >
+
+    <EditText
+        android:id="@+id/subFoodName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Sub Food Name" />
+
+    <EditText
+        android:id="@+id/subFoodprice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Sub Food Price"
+        android:layout_below="@id/subFoodName"/>
+    <EditText
+        android:id="@+id/subFoodDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Sub Food Description"
+        android:layout_below="@id/subFoodprice"/>
+
+</RelativeLayout>

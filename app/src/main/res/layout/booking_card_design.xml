@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    android:background="?attr/selectableItemBackground"
+    android:layout_marginBottom="4dp"
+    app:cardBackgroundColor="@color/colorPrimary">
+
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
+
+
+        <ImageView
+            android:id="@+id/arrowRotate"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/rotate_arrow"
+            android:layout_marginTop="1dp"/>
+
+        <TextView
+            android:id="@+id/appointmentTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:fontFamily="@font/bungee"
+            android:layout_marginLeft="30dp"
+            android:text="title"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/declignRequest"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="90dp"
+            android:text="Decline"
+            android:textSize="9sp"
+            android:fontFamily="@font/bungee"
+            />
+
+        <Button
+            android:id="@+id/acceptRequest"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:text="Accept"
+            android:textSize="9sp"
+            android:fontFamily="@font/bungee"
+            />
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+
+    <RelativeLayout
+        android:id="@+id/expandableLayout"
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:padding="10dp">
+
+
+
+                <TextView
+                    android:id="@+id/ShowLabelTime"
+                    android:fontFamily="@font/gravitas_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:text="Time:"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ShowLabelTime"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="@font/baloo"
+                    android:layout_marginLeft="16dp"
+                    android:text="ShowLabelTime"
+                    android:textSize="15sp" />
+
+
+                <TextView
+        android:id="@+id/showLabelDate"
+        android:fontFamily="@font/gravitas_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ShowLabelTime"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="16dp"
+        android:text="Date:"
+        android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ShowLabelTime"
+            android:layout_marginStart="8dp"
+            android:layout_toRightOf="@+id/showLabelDate"
+            android:fontFamily="@font/baloo"
+            android:layout_marginLeft="16dp"
+            android:text="showLabelDate"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/showLabelTotalBill"
+            android:fontFamily="@font/gravitas_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/showLabelDate"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="16dp"
+            android:text="TotalBill:"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/totalbill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/showLabelDate"
+            android:layout_marginStart="8dp"
+            android:layout_toRightOf="@+id/showLabelTotalBill"
+            android:fontFamily="@font/baloo"
+            android:layout_marginLeft="16dp"
+            android:text="showLabelDate"
+            android:textSize="15sp" />
+
+
+
+        <TextView
+            android:id="@+id/quantityy"
+            android:fontFamily="@font/gravitas_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/showLabelTotalBill"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="16dp"
+            android:text="Quanity:"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/appointmentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/showLabelTotalBill"
+            android:layout_marginStart="8dp"
+            android:layout_toRightOf="@+id/quantityy"
+            android:fontFamily="@font/baloo"
+            android:layout_marginLeft="16dp"
+            android:text="showLabelDate"
+            android:textSize="15sp" />
+
+
+                        <TextView
+                            android:id="@+id/price"
+                            android:fontFamily="@font/gravitas_one"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/appointmentName"
+                            android:layout_below="@+id/totalbill"
+                            android:text="1"
+                            android:textSize="15sp"
+                            android:layout_marginLeft="20dp"/>
+
+        <TextView
+            android:id="@+id/labelAddress"
+            android:fontFamily="@font/gravitas_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/quantityy"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="16dp"
+            android:text="Address:"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/BookingsAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/quantityy"
+            android:layout_marginStart="8dp"
+            android:layout_toRightOf="@+id/labelAddress"
+            android:fontFamily="@font/baloo"
+            android:layout_marginLeft="16dp"
+            android:text="showLabelDate"
+            android:textSize="15sp" />
+
+
+
+<!--                <TextView-->
+<!--                    android:id="@+id/quantity"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/name"-->
+<!--                    android:text="Quantity"-->
+<!--                    android:textSize="15sp"-->
+<!--                    android:layout_marginLeft="310dp"-->
+<!--                    android:fontFamily="@font/baloo"-->
+<!--                    />-->
+
+
+
+<!--                <TextView-->
+<!--                    android:id="@+id/showLabelPrice"-->
+<!--                    android:fontFamily="@font/gravitas_one"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/showLabelName"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:layout_marginLeft="16dp"-->
+<!--                    android:layout_marginRight="90dp"-->
+<!--                    android:text="Price:"-->
+<!--                    android:textSize="15sp"-->
+<!--                    />-->
+
+
+
+
+
+
+<!--                <TextView-->
+<!--                    android:id="@+id/price"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_below="@+id/showLabelName"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:layout_toRightOf="@+id/showLabelPrice"-->
+<!--                    android:fontFamily="@font/baloo"-->
+<!--                    android:layout_marginLeft="16dp"-->
+<!--                    android:text="price"-->
+<!--                    android:textSize="15sp"-->
+<!--                    />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/showLabelName"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_below="@+id/showLabelPrice"-->
+        <!--            android:text="Name:"-->
+        <!--            android:layout_marginStart="8dp"-->
+        <!--            android:layout_marginRight="90dp"-->
+        <!--            android:fontFamily="@font/gravitas_one"-->
+        <!--            android:textSize="15sp" />-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/appointmentName"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_toRightOf="@+id/showLabelName"-->
+        <!--            android:layout_below="@+id/showLabelDate"-->
+        <!--            android:text="Name"-->
+        <!--            android:layout_marginLeft="16dp"-->
+        <!--            android:layout_marginStart="8dp"-->
+        <!--            android:fontFamily="@font/baloo"-->
+        <!--            android:textSize="15sp"-->
+        <!--            />-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--        <TextView-->
+<!--            android:id="@+id/labelAddress"-->
+<!--            android:fontFamily="@font/gravitas_one"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/showLabelName"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:layout_marginLeft="16dp"-->
+<!--            android:text="Address:"-->
+<!--            android:textSize="15sp" />-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/BookingsAddress"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@+id/showLabelName"-->
+<!--            android:layout_toRightOf="@+id/labelAddress"-->
+<!--            android:layout_marginStart="8dp"-->
+<!--            android:fontFamily="@font/baloo"-->
+<!--            android:layout_marginLeft="16dp"-->
+<!--            android:text="labelAddress"-->
+<!--            android:textSize="15sp" />-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
