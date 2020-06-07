@@ -328,7 +328,7 @@ public class CartActivity extends AppCompatActivity {
 
 
 
-//
+//a
 //            if(quantityList.size() == 1){
 //                for(int i=Integer.valueOf(position); i<= quantityList.size(); i++){
 //                    if(quantityList.get(i) == null){
