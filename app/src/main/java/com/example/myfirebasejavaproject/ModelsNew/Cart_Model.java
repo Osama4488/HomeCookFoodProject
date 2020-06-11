@@ -4,7 +4,7 @@ import androidx.annotation.Nullable;
 
 public class Cart_Model {
 
-    String subFoodName,subFoodPrice,Quantity,cartId,SubFoodId,address;
+    String subFoodName,subFoodPrice,Quantity,cartId,SubFoodId,address,HomeCookerName;
 
 
     public Cart_Model() {
@@ -16,6 +16,14 @@ public class Cart_Model {
         this.subFoodPrice = subFoodPrice;
         Quantity = quantity;
 
+    }
+
+    public String getHomeCookerName() {
+        return HomeCookerName;
+    }
+
+    public void setHomeCookerName(String homeCookerName) {
+        HomeCookerName = homeCookerName;
     }
 
     public String getAddress() {

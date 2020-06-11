@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myfirebasejavaproject.ModelsNew.UserHelperClass;
 import com.example.myfirebasejavaproject.R;
 import com.example.myfirebasejavaproject.AdaptersNew.User.menu_item_adapter;
 import com.example.myfirebasejavaproject.ModelsNew.Main_food_model;
@@ -26,6 +27,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class FragmentOne extends Fragment {
 
@@ -54,7 +57,7 @@ public class FragmentOne extends Fragment {
 
     private void setRecycerView(){
 
-        SharedPreferences editor = getActivity().getSharedPreferences("subFoodItemClick",Context.MODE_PRIVATE);
+        SharedPreferences editor = getActivity().getSharedPreferences("subFoodItemClick", MODE_PRIVATE);
         String clikedItem = editor.getString("subFoodName","");
         menuItemsrecycler.setHasFixedSize(true);
         menuItemsrecycler.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext(), LinearLayoutManager.VERTICAL, false));
@@ -76,13 +79,14 @@ public class FragmentOne extends Fragment {
                     Main_food_model item = postSnapshot.getValue(Main_food_model.class);
                     String name = item.getName();
                    // mainFoodid = postSnapshot.getKey();
-                    SharedPreferences editor = getActivity().getSharedPreferences("subFoodItemClick", Context.MODE_PRIVATE);
+                    SharedPreferences editor = getActivity().getSharedPreferences("subFoodItemClick", MODE_PRIVATE);
                     String check = editor.getString("subFoodName", "");
                     if (check.equals(name)) {
 
                         for (DataSnapshot presnapshot : postSnapshot.getChildren()) {
                             for (DataSnapshot last : presnapshot.getChildren()) {
                                 Sub_food_Model model = last.getValue(Sub_food_Model.class);
+                                model.setHomeCookerName(getCookerName());
                                 model.setSubFoodId(last.getKey());
                                 mDatalist.add(model);
 
@@ -135,8 +139,15 @@ public class FragmentOne extends Fragment {
 //        menuItemsrecycler.setAdapter(adapter);
     }
 
+    private String getCookerName(){
+        SharedPreferences editor = getActivity().getSharedPreferences("clickedProfile", MODE_PRIVATE);
+       // SharedPreferences editor = getActivity().getSharedPreferences("clickedProfile", Context.MODE_PRIVATE);
+        String k = editor.getString("HomeCookerName","");
+        return k;
+    }
+
     private void getKey(){
-        SharedPreferences prefs = getActivity().getSharedPreferences("clickedProfile",Context.MODE_PRIVATE);
+        SharedPreferences prefs = getActivity().getSharedPreferences("clickedProfile", MODE_PRIVATE);
         _KEY = prefs.getString("uid","");
     }
 

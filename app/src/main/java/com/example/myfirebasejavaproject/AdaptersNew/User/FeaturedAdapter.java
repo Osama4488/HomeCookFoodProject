@@ -65,6 +65,7 @@ public class FeaturedAdapter  extends RecyclerView.Adapter<FeaturedAdapter.Featu
                 SharedPreferences.Editor editor = mContext.getSharedPreferences("clickedProfile",Context.MODE_PRIVATE).edit();
                 editor.putString("uid",uid);
                 editor.putString("imageurl",featuredHelperClass.getmImageUrl());
+                editor.putString("HomeCookerName",featuredHelperClass.getName());
                 editor.commit();
                 mContext.startActivity(new Intent(mContext, Menu_Profile.class));
             }

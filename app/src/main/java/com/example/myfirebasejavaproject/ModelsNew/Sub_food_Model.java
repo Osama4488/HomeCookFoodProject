@@ -4,7 +4,7 @@ import androidx.annotation.Nullable;
 
 public class Sub_food_Model {
 
-    String subFoodName,subFoodPrice,subFoodDesc,subFoodId,mainFoodId;
+    String subFoodName, subFoodPrice, subFoodDesc, subFoodId, mainFoodId, HomeCookerName;
 
     public Sub_food_Model(String subFoodName, String subFoodPrice, String subFoodDesc) {
         this.subFoodName = subFoodName;
@@ -15,7 +15,13 @@ public class Sub_food_Model {
     public Sub_food_Model() {
     }
 
+    public String getHomeCookerName() {
+        return HomeCookerName;
+    }
 
+    public void setHomeCookerName(String homeCookerName) {
+        HomeCookerName = homeCookerName;
+    }
 
     public String getSubFoodId() {
         return subFoodId;
@@ -48,14 +54,14 @@ public class Sub_food_Model {
     public void setSubFoodDesc(String subFoodDesc) {
         this.subFoodDesc = subFoodDesc;
     }
+
     @Override
     public boolean equals(@Nullable Object obj) {
-        if(obj instanceof Sub_food_Model){
-            Sub_food_Model model  = (Sub_food_Model) obj;
+        if (obj instanceof Sub_food_Model) {
+            Sub_food_Model model = (Sub_food_Model) obj;
             return this.subFoodId.equals(model.getSubFoodId());
 
-        }
-        else {
+        } else {
             return false;
         }
     }

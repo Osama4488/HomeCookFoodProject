@@ -58,7 +58,7 @@ public class CartActivity extends AppCompatActivity {
     SharedPreferences prefs;
     String _KEY;
     HashSet<String> hashet;
-    TextView showQuanity,showBill;
+    TextView showQuanity,showBill,homeCookerName;
     HashMap<String,Cart_Model> mList;
     RelativeLayout btnPlaceOrder;
     List<Integer> keys;
@@ -80,6 +80,7 @@ public class CartActivity extends AppCompatActivity {
         billLayout = findViewById(R.id.billLayout);
         cartRecyclerView = findViewById(R.id.cartRecyclerView);
         showQuanity = findViewById(R.id.showQuanity);
+        homeCookerName = findViewById(R.id.homecookername);
         showBill = findViewById(R.id.showBill);
         mList = new HashMap<>();
         keys = new ArrayList<>();
@@ -157,7 +158,8 @@ public class CartActivity extends AppCompatActivity {
                 if(mList.size() == 0){
                     Toast.makeText(CartActivity.this, "Select something to Order", Toast.LENGTH_SHORT).show();
                 }
-                else if(mList.size() == size){
+//                else if(mList.size() == size){
+                else{
                     //refrence = UserHelperClass.path.child(_KEY).child("Placed-Order").child();
                     refrence.child("date").setValue(apointmentModel.getDate());
                     refrence.child("time").setValue(apointmentModel.getTime());

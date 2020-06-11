@@ -57,7 +57,7 @@ public class cartAdapter  extends RecyclerView.Adapter<cartAdapter.MyViewHolder>
 
         holder.subFoodName.setText(model.getSubFoodName());
         holder.SubFoodPrice.setText(model.getSubFoodPrice());
-
+        holder.homeCookerName.setText(model.getHomeCookerName());
         billList = new HashMap<>();
         quantityList = new HashMap<>();
 
@@ -220,7 +220,7 @@ public class cartAdapter  extends RecyclerView.Adapter<cartAdapter.MyViewHolder>
     {
 
 
-        TextView subFoodName,SubFoodPrice;
+        TextView subFoodName,SubFoodPrice,homeCookerName;
         RelativeLayout wholeCartItem;
         CheckBox check;
         ElegantNumberButton elegantNumberButton;
@@ -235,6 +235,7 @@ public class cartAdapter  extends RecyclerView.Adapter<cartAdapter.MyViewHolder>
             elegantNumberButton = itemView.findViewById(R.id.elegantButton);
             cartCardview = itemView.findViewById(R.id.cartCardView);
             deletItem = itemView.findViewById(R.id.deleteCartItem);
+            homeCookerName = itemView.findViewById(R.id.homecookername);
         }
     }
 

@@ -87,6 +87,8 @@ public class menu_item_adapter extends RecyclerView.Adapter<menu_item_adapter.me
                 Items.setSubFoodId(model.getSubFoodId());
                 Items.setSubFoodName(model.getSubFoodName());
                 Items.setSubFoodPrice(model.getSubFoodPrice());
+                Items.setHomeCookerName(model.getHomeCookerName());
+
 
 //                reference.child("Cart").orderByChild("SubFoodName").equalTo("U1EL5623")("value",snapshot => {
 //                if (snapshot.exists()){
