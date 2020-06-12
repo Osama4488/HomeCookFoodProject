@@ -8,6 +8,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -63,6 +64,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ImageView menuIcon;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -79,9 +81,11 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
       // gridRecyclerView = findViewById(R.id.gridRecycler);
         menuIcon = findViewById(R.id.menu_icon);
         contentView = findViewById(R.id.content);
+        setUpProgressBar();
         featuredRecycler();
         mostViewedRecycler();
         nearByRecycler();
+
        // gridRecycler();
 
 
@@ -96,7 +100,17 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 
         navigationDrawer();
 
+
     }
+
+    private void setUpProgressBar() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading please wait...");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+    }
+
 
     //Navigation Drawer Functions
     private void navigationDrawer() {
@@ -196,7 +210,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 //        mostviewedRecycler.setHasFixedSize(true);
 //        mostviewedRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-
+        progressDialog.show();
         featuredRecycler.setHasFixedSize(true);
         featuredRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mDatalist = new ArrayList<>();
@@ -230,6 +244,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
                 Toast.makeText(mContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+
 
 //        Gson gson = new Gson();
 //        String json = mPrefs.getString(PRODUCT_TAG, "");
@@ -358,12 +373,15 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                progressDialog.dismiss();
                 Toast.makeText(mContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
 //
     }
+
+
 
     private void nearByRecycler(){
         nearByRecyclerView.setHasFixedSize(true);
@@ -397,10 +415,12 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
                 NearBydDataList.remove(0);
                 nearByAdapter = new NearByAdapter(NearBydDataList,UserDashboard.this);
                 nearByRecyclerView.setAdapter(nearByAdapter);
+                progressDialog.dismiss();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                progressDialog.dismiss();
                 Toast.makeText(mContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -408,6 +428,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
     }
 
     private void gridRecycler(){
+
         gridRecyclerView.setHasFixedSize(true);
         gridRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
         gridDataList = new ArrayList<>();
@@ -438,6 +459,7 @@ public class UserDashboard extends AppCompatActivity implements NavigationView.O
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                progressDialog.dismiss();
                 Toast.makeText(mContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

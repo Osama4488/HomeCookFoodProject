@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -52,6 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     SharedPreferences onBoardgingScreen;
     boolean check = false;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onStart() {
@@ -113,6 +115,14 @@ public class LoginActivity extends AppCompatActivity {
 //
 //            }
 //        });
+
+    private void setUpProgressBar() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading please wait...");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+    }
 
 
 
@@ -179,6 +189,7 @@ public class LoginActivity extends AppCompatActivity {
 //                startActivity(intent);
             }
         });
+        setUpProgressBar();
     }
 
     private void createRequest() {
@@ -292,6 +303,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void isUser() {
+        progressDialog.show();
         final String userEnteredUsername = username.getEditText().getText().toString();
         final String userEnteredPassword = password.getEditText().getText().toString();
 
@@ -357,11 +369,13 @@ public class LoginActivity extends AppCompatActivity {
                                                                 UserHelperClass.whichUser = true;
 //
                                                                 if(typeFromDb.equals("User")){
+                                                                    progressDialog.dismiss();
                                                                     Intent intent = new Intent(getApplicationContext(), UserDashboard.class);// Onboarding Activity pe
                                                                     startActivity(intent);
                                                                     finish();
                                                                 }
                                                                 else {
+                                                                    progressDialog.dismiss();
                                                                     Intent intent = new Intent(getApplicationContext(), Home_cooker_DashBoard.class);// Onboarding Activity pe
                                                                     startActivity(intent);
                                                                     finish();
@@ -372,16 +386,18 @@ public class LoginActivity extends AppCompatActivity {
 
                                                             } else {
                                                                 password.setError("Wrong Password");
+                                                                progressDialog.dismiss();
                                                                 password.requestFocus();
                                                             }
                                                         } else {
                                                             username.setError("No such User Exist");
+                                                            progressDialog.dismiss();
                                                             username.requestFocus();
                                                         }
                                                     }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                progressDialog.dismiss();
             }
         });
 

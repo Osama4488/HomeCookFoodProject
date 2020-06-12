@@ -130,7 +130,6 @@ public class menu_item_adapter extends RecyclerView.Adapter<menu_item_adapter.me
                             Toast.makeText(mContext, "Item Added To Cart", Toast.LENGTH_LONG).show();
                         }
 
-
                     }
 
                     @Override

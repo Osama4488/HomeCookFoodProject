@@ -122,6 +122,7 @@ public class cartAdapter  extends RecyclerView.Adapter<cartAdapter.MyViewHolder>
             intent.putExtra("quantityByElegant",holder.elegantNumberButton.getNumber());
             intent.putExtra("originalPrice",model.getSubFoodPrice());
             intent.putExtra("Address",model.getAddress());
+            intent.putExtra("homeCOkkername",model.getHomeCookerName());
             LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
         }
 
@@ -162,6 +163,7 @@ public class cartAdapter  extends RecyclerView.Adapter<cartAdapter.MyViewHolder>
                     intent.putExtra("originalPrice",model.getSubFoodPrice());
                     intent.putExtra("quantityByElegant",holder.elegantNumberButton.getNumber());
                     intent.putExtra("Address",model.getAddress());
+                    intent.putExtra("homeCOkkername",model.getHomeCookerName());
                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
 
                 }
@@ -180,6 +182,7 @@ public class cartAdapter  extends RecyclerView.Adapter<cartAdapter.MyViewHolder>
                     intent.putExtra("postionClicked",Integer.toString(position));
                     intent.putExtra("CartId",carTId);
                     intent.putExtra("Address","");
+                    intent.putExtra("homeCOkkername",model.getHomeCookerName());
                     LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
 
 

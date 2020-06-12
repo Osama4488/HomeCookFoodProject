@@ -7,14 +7,17 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,11 +74,15 @@ public class CartActivity extends AppCompatActivity {
     HashMap<String,String> quantityList;
     HashMap<String,String> quantityKeysNew;
     HashMap<Integer,String> priceList;
+    ProgressBar progressbar;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+        progressbar = findViewById(R.id.progressBar);
+        progressbar.setVisibility(View.GONE);
         btn = findViewById(R.id.elegantButton);
         billLayout = findViewById(R.id.billLayout);
         cartRecyclerView = findViewById(R.id.cartRecyclerView);
@@ -93,6 +100,7 @@ public class CartActivity extends AppCompatActivity {
         cartBackIconn = findViewById(R.id.cartBackIcon);
         postion_list = new ArrayList<>();
         hashet = new HashSet<>();
+        setUpProgressBar();
         cartBackIconn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +112,7 @@ public class CartActivity extends AppCompatActivity {
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 for ( String key : mList.keySet() ) {
                     keys.add(Integer.valueOf(key));
 
@@ -113,6 +122,12 @@ public class CartActivity extends AppCompatActivity {
                  String placedOrderId;
                 refrence = UserHelperClass.path.child(_KEY).child("Placed-Order").push();
                 //refrence.child(_KEY).child("Placed-Order").push();
+                    for(int jj = 0 ; jj < mList.size();jj++){
+                        Cart_Model model = new Cart_Model();
+                        model = mList.get(Integer.toString(keys.get(j)));
+
+                    }
+
                     for(int i=0; i <mList.size();i++){
 
 
@@ -172,6 +187,7 @@ public class CartActivity extends AppCompatActivity {
 
                     totalBill = 0;
                     Toast.makeText(CartActivity.this, "Your Order has been Placed", Toast.LENGTH_LONG).show();
+                    progressDialog.dismiss();
                     startActivity(new Intent(CartActivity.this, UserDashboard.class));
                 }
             }
@@ -214,6 +230,8 @@ public class CartActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
+
+            progressDialog.show();
             String ItemName = intent.getStringExtra("item");
             String qty = intent.getStringExtra("quantity");
             String price = intent.getStringExtra("price");
@@ -226,13 +244,14 @@ public class CartActivity extends AppCompatActivity {
             String cartid = intent.getStringExtra("CartId");
               String qty1 = intent.getStringExtra("quantityByElegant");
               String address = intent.getStringExtra("Address");
-            PlaceOrder(ItemName,qty,price,subFooDID,positon,moneyToRemove,quantityToRemove,cartid,originalPrice,qty1,address);
+              String homeCookerName =  intent.getStringExtra("homeCOkkername");
+            PlaceOrder(ItemName,qty,price,subFooDID,positon,moneyToRemove,quantityToRemove,cartid,originalPrice,qty1,address,homeCookerName);
             Toast.makeText(CartActivity.this,positon +" "+qty + " "+price ,Toast.LENGTH_SHORT).show();
         }
     };
 
 
-    private void PlaceOrder(String subFoodName,String qty,String price,String SubFoodId,String position,String moneyToRemove,String quantityToRemove,String cartID,String originalPrice,String originalQuantity,String address) {
+    private void PlaceOrder(String subFoodName,String qty,String price,String SubFoodId,String position,String moneyToRemove,String quantityToRemove,String cartID,String originalPrice,String originalQuantity,String address,String homeCookerName) {
 
 //        Cart_Model model = new Cart_Model();
 //        model.setSubFoodId(SubFoodId);
@@ -244,8 +263,9 @@ public class CartActivity extends AppCompatActivity {
         model.setSubFoodId(SubFoodId);
         model.setSubFoodName(subFoodName);
         model.setQuantity(qty);
-        model.setSubFoodPrice(price);
+        model.setSubFoodPrice(originalPrice);
         model.setAddress(address);
+        model.setHomeCookerName(homeCookerName);
 
         if (subFoodName.equals("")) {
             mList.remove(position);
@@ -261,6 +281,7 @@ public class CartActivity extends AppCompatActivity {
 
             quantityList.remove(Integer.valueOf(position));
             priceList.remove(Integer.valueOf(position));
+            progressDialog.dismiss();
         } else {
 
             quantityList.put(position, qty);
@@ -309,7 +330,7 @@ public class CartActivity extends AppCompatActivity {
             }
             showQuanity.setText(Integer.toString(TotalQuantity));
             showBill.setText(Integer.toString(TotalBill));
-
+            progressDialog.dismiss();
 //            for(int j=0;j < quantityList.size();j++){
 //
 //                for(String key : quantityList.keySet()){
@@ -512,7 +533,16 @@ public class CartActivity extends AppCompatActivity {
 
 
     }
+    private void setUpProgressBar() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading please wait...");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+    }
+
     private void setCartRecyclerView(){
+        progressDialog.show();
         prefs = getSharedPreferences(UserHelperClass.shared, MODE_PRIVATE);
         _KEY = prefs.getString("homeCookerId","");
         mDatalist = new ArrayList<>();
@@ -556,5 +586,35 @@ public class CartActivity extends AppCompatActivity {
 
             }
         });
+        progressDialog.dismiss();
     }
+
+//
+//    class Downloader extends AsyncTask<Void,Integer,Integer>{
+//
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            progressbar.setMax(100);
+//        }
+//
+//        @Override
+//        protected void onProgressUpdate(Integer... values) {
+//            super.onProgressUpdate(values);
+//            progressbar.setProgress(values[0]);
+//        }
+//
+//        @Override
+//        protected Integer doInBackground(Void... voids) {
+//
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Integer integer) {
+//            super.onPostExecute(integer);
+//        }
+//    }
 }
+
