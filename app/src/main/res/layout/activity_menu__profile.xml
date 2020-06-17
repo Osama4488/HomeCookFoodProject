@@ -13,57 +13,57 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         android:id="@+id/app_bar">
 
-<com.google.android.material.appbar.CollapsingToolbarLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/collapsingToolbar"
-    android:fitsSystemWindows="true"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-    app:contentScrim="@color/colorPrimaryDark"
-    >
-
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:scaleType="center"
-        app:layout_collapseMode="parallax"
-        android:background="@color/design_default_color_primary_dark"
-        android:id="@+id/menu_profile_main_image"
-        android:alpha="0.6"/>
-
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbar"
-        app:layout_collapseMode="pin"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
-        <RelativeLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:id="@+id/collapsingToolbar"
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:contentScrim="@color/colorPrimaryDark"
+            >
+
+
             <ImageView
-                android:id="@+id/cartOpen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_cart_icon"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="center"
+                app:layout_collapseMode="parallax"
+                android:background="@color/design_default_color_primary_dark"
+                android:id="@+id/menu_profile_main_image"
+                android:alpha="0.6"/>
 
-                />
-        </RelativeLayout>
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/toolbar"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/cartOpen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_cart_icon"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="10dp"
+
+                        />
+                </RelativeLayout>
 
 
-    </androidx.appcompat.widget.Toolbar>
-</com.google.android.material.appbar.CollapsingToolbarLayout>
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="?attr/actionBarSize"-->
-<!--        android:background="?attr/colorPrimary"/>-->
+    <!--    <androidx.appcompat.widget.Toolbar-->
+    <!--        android:id="@+id/toolbar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="?attr/actionBarSize"-->
+    <!--        android:background="?attr/colorPrimary"/>-->
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
@@ -86,39 +86,39 @@
 
 
 
-<!--            <RelativeLayout-->
-<!--                android:layout_below="@+id/dashboard"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent">-->
+        <!--            <RelativeLayout-->
+        <!--                android:layout_below="@+id/dashboard"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="match_parent">-->
 
 
-<!--                <androidx.recyclerview.widget.RecyclerView-->
-<!--                    android:id="@+id/main_food_recycler"-->
-<!--                    android:layout_width="10dp"-->
-<!--                    android:layout_height="10dp"-->
-<!--                    android:layout_marginTop="50dp"-->
-<!--                    tools:listitem="@layout/most_viewed_card_design"-->
-<!--                    />-->
+        <!--                <androidx.recyclerview.widget.RecyclerView-->
+        <!--                    android:id="@+id/main_food_recycler"-->
+        <!--                    android:layout_width="10dp"-->
+        <!--                    android:layout_height="10dp"-->
+        <!--                    android:layout_marginTop="50dp"-->
+        <!--                    tools:listitem="@layout/most_viewed_card_design"-->
+        <!--                    />-->
 
-<!--            </RelativeLayout>-->
-
-
+        <!--            </RelativeLayout>-->
 
 
 
-<!--       <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--           android:layout_width="50dp"-->
-<!--           android:layout_height="50dp">-->
 
 
-<!--           <androidx.recyclerview.widget.RecyclerView-->
-<!--               android:id="@+id/recyclerview"-->
-<!--               android:layout_width="50dp"-->
-<!--               android:layout_height="50dp"-->
-<!--               tools:listitem="@layout/cooker_menu_items_layout"-->
-<!--               />-->
+        <!--       <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+        <!--           android:layout_width="50dp"-->
+        <!--           android:layout_height="50dp">-->
 
-<!--       </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+
+        <!--           <androidx.recyclerview.widget.RecyclerView-->
+        <!--               android:id="@+id/recyclerview"-->
+        <!--               android:layout_width="50dp"-->
+        <!--               android:layout_height="50dp"-->
+        <!--               tools:listitem="@layout/cooker_menu_items_layout"-->
+        <!--               />-->
+
+        <!--       </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
 
     </androidx.viewpager.widget.ViewPager>
 

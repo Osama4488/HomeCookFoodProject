@@ -178,7 +178,6 @@ public class HomeCookerBookings extends AppCompatActivity {
                 refrence.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
                         Appointment_Model appointment_model = new Appointment_Model();
                         placedOrdersSize =  (int) dataSnapshot.getChildrenCount();
                         Appointment_Model model1 = dataSnapshot.getValue(Appointment_Model.class);

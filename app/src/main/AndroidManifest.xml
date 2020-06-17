@@ -21,11 +21,7 @@
 
         </activity>
         <activity android:name=".ActivitiesNew.User.CartActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ActivitiesNew.HomeCooker.Hom_cooker_sub_food_Activity" />
         <activity android:name=".ActivitiesNew.User.Menu_Profile">
@@ -54,7 +50,11 @@
         </activity>
         <activity android:name=".ExtraWork.DashboardActivity" />
         <activity android:name=".ActivitiesNew.Common.SplashActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ActivitiesNew.Common.SignUpTabs" >
 

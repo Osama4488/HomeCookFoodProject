@@ -49,7 +49,7 @@ public class CartActivity extends AppCompatActivity {
     static int puraniValue =0;
     static int quantityKeyInteger = 0;
     static boolean checkQantity = false;
-    static int TotalBill;
+    static int TotalBill=0;
     int size;
     ElegantNumberButton btn;
     RelativeLayout billLayout;
@@ -67,7 +67,7 @@ public class CartActivity extends AppCompatActivity {
     List<Integer> keys;
     List<Integer> quantityKeys;
     //HashMap<String,Integer> quantityKeysNew;
-    static int totalBill;
+    static int totalBill=0;
     Appointment_Model apointmentModel;
     List<String> cartIdList;
     ImageView cartBackIconn;
@@ -263,7 +263,7 @@ public class CartActivity extends AppCompatActivity {
         model.setSubFoodId(SubFoodId);
         model.setSubFoodName(subFoodName);
         model.setQuantity(qty);
-        model.setSubFoodPrice(originalPrice);
+        model.setSubFoodPrice(price);
         model.setAddress(address);
         model.setHomeCookerName(homeCookerName);
 

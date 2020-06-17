@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         } else if (!exist.equals("") && type.equals("Homecooker")) {
-            getHomeCookerUpdatedData(id);
+            //getHomeCookerUpdatedData(id);
             Intent intent = new Intent(getApplicationContext(), Home_cooker_DashBoard.class);// Onboarding Activity pe
             startActivity(intent);
             finish();
